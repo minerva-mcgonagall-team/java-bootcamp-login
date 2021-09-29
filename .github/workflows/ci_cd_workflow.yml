@@ -1,0 +1,31 @@
+name: CI/CD Worflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Heroku Deployment
+      uses: AkhileshNS/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_email: ${{secrets.HEROKU_EMAIL}}
+        heroku_app_name: ${{secrets.HEROKU_APP}}
+
+
+#     - name: Set up JDK 11
+#       uses: actions/setup-java@v2
+#       with:
+#         java-version: '11'
+#         distribution: 'adopt'
+#         cache: maven
+#     - name: Build with Maven
+#       run: mvn -B package --file pom.xml
