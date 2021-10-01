@@ -25,3 +25,8 @@ hs_err_pid*
 *.iml
 *.idea
 **/target
+
+#VS Code settings.
+/.settings
+/.project
+/.classpath
