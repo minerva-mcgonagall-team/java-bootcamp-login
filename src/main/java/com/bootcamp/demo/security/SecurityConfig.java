@@ -30,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         var inMemoryAuth = auth.inMemoryAuthentication();
-        inMemoryAuth.withUser("severus.snape.team@gmail.com").password("{noop}severus.snape.password").roles("USER");
-        inMemoryAuth.withUser("albus.dumbledore.team@gmail.com").password("{noop}Dumbl3dore21!").roles("USER");
+        inMemoryAuth.withUser("severus.snape.team@gmail.com").password("{noop}xxx").roles("USER");
+        inMemoryAuth.withUser("albus.dumbledore.team@gmail.com").password("{noop}xxx").roles("USER");
         // Spring Security 5 requires specifying the password storage format
     }
 
