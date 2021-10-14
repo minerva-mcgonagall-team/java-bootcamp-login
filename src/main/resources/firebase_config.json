@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "java-bootcamp-db",
+  "private_key_id": "0055d48742e5136f87cc032593b9ccb638645132",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDSeY968ZxBWVsI\nDNzzzrjoykHgBGYpLeMFXZ/HgnpgsiMURo5n450m8QnoOCTeABFlgtLdYcaPJiv0\nGBiolmClwvIdLs2NBlTFkfctoRXyxLyJzJ+u6aNr1tsNJO84ey/lCIHZxvo2hRM2\nemzvsh2e2xAtXrjlXmX0+fOgXsAOBTA/RgeKdmHLGrh9x4Jxq9iop2Cf9sezWFEK\nEOzbGq1sCpJqsgYAhdkxKBX8cgWQgqKOdgvFW6jXquLMOBmSs6otKgd5U9pmmYPd\nEYZ/xOQbmIe+L8tXylZmMVnFbQDX0Pg8mXTT36Pp0A+W4Xd1UBriRGozAAMnmbfh\naTAg5hBZAgMBAAECggEAFx0MWacAztheO9MVzJxuB/p2I4C4K1uDq8otSr6Ua9wE\nKCzbZKNFVcpwmRTZT5vYTTqBp5geMwgxGXwv8Quaj3mKFxRVtF/2nT+7UkJ3Y5Kh\nVcyn2JCFxsjwg1AECULV7qPxhpXoUmZoxrnJDsWTpSdPbnwRd/bW4YE1dO4Szzcl\nlSomo50FNZQb12lAegncBTwXy1DsurJCuI92MQzqRtQ0MJO88JTIZr+trCDaBfDh\n5ljNM2WHOY5FlI8Skq07wRD03jslp33l4G2N/xADUVt782FGuAmf4/CP3QmnoLhL\n76+ZWcjBuTEB3Lm9+5hl4mQjUpW8P6zdn06fbU510QKBgQD12Sn7zA9ErfxMuo0V\nKmp4sd87vRoap1Y/g7wS+52po3P56nVuptKFXMPCofroRBYOT5rYM/CK8p/oQGSg\nicTbKMxTy/qOVHgMxfQGayEkKRlS9KNdiuImUfzsiQ3DrkvkC5ITgeY6iy3wkAsF\nHwUujOrzxpgqhp55h4R39k4ElQKBgQDbKneuoP+KAkmWpFmOEFu6/DhU/5PKZ+wb\nUB2efOIqULwM91QxCePz6bs1hEcElaGexCYqEE6+va8zyPLFIPw9KvhdPAVkBcSm\nI2hBEEOgBwcuSGJqsdNhtxDBsbNEnl8H4oGHC/fK+gOnPDUS/xicDv2PFWYAoYLK\nq43mzTnHtQKBgCIcSHP0QyYPUdM/ivWl1fH7E/MQ8L9D+naDi6PCn4R69kt1mWeJ\n4+m3Dj5CBTMWx0yjBOP8iOJueXta+9s+Yj7aMUdrJM98rs9u48XENWvz+9yDrur6\nqxgQBhy3g15kH4l7hYAJZO04hF49ThoezLRBvxOluVUlKnXINLwEQ5zlAoGAQ5r+\nACg5q2C5QnbACUqSgUN8PPv5ot4bvvEfsdvkCBmPaJCCr/3VC1B2JzP+lDNz/32S\nKDePktcATIEYIibiqBuxMVFqeEgvOPCDIE7cDWkdlfFOKotgISxPRvCB1BDmT5BX\nVEkkzsAAkH3KAWofNUSKgrCfHmKz7cCtrRxxTmECgYABkfbSLAzKj8x3r83jU8/V\npYVZRQ9eNTwgBPLP7CATss0ixa10Zy4frleXb2bFJtmysV0a4Ojmel+0MQ+NYe2O\nBZ2lvAgtBO/q7Qm6NRij0j2o9PfcILnGqpZwy7MFUu4MGv1p/6EaltDVtPhkXRcJ\nYuWqE2TxicqJBF9y1G+Shw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-d3ndx@java-bootcamp-db.iam.gserviceaccount.com",
+  "client_id": "100207846869947429772",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-d3ndx%40java-bootcamp-db.iam.gserviceaccount.com"
+}

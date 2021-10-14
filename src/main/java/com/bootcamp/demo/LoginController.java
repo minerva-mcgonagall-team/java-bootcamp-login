@@ -12,9 +12,9 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/dashboard")
     public String index() {
-        return "index";
+        return "dashboard";
     }
 
     @RequestMapping("/login-error")
