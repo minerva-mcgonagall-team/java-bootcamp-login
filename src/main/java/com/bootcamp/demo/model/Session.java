@@ -4,13 +4,14 @@ import java.time.LocalDateTime;
 
 /**
  * A Session object stores the user, the start and end date and time of the session
- *
+ * <p>
  * Next needed update: DI of the User attribute automatically when a session is created, and the user will be
  * recognised after the Log In
  *
  * @author Denisa Dragota
  * @version 11/11/2021
  */
+
 public class Session {
 
     private final LocalDateTime startSession;
@@ -21,10 +22,10 @@ public class Session {
      * Session constructor that initialises a session start time with the current date and time
      * when creating the object and setting the end date and time null
      */
-    public Session(){
+    public Session() {
         this.startSession = LocalDateTime.now();
         this.endSession = null;
-    };
+    }
 
     public LocalDateTime getStartSession() {
         return startSession;

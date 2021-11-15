@@ -2,23 +2,31 @@ package com.bootcamp.demo.model;
 
 /**
  * An User object stores first and last name, email, password, phoneNumber and gender of an user
- *
+ * <p>
  * Next needed update: to find a way to store encrypted password, not the real one
  *
  * @author Denisa Dragota
- * @version 11/11/2021
+ * @version 15/11/2021
  */
 
 public class User {
+    public enum Gender {MALE, FEMALE}
 
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String phoneNumber;
-    private String gender;
+    private Gender gender;
 
-    public User(){};
+    public User(String firstName, String lastName, String email, String password, String phoneNumber, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -52,11 +60,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
