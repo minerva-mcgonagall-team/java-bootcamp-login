@@ -1,6 +1,7 @@
 package com.bootcamp.demo.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+
 
 /**
  * A Session object stores the user, the start and end date and time of the session
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 
 public class Session {
 
-    private final LocalDateTime startSession;
-    private LocalDateTime endSession;
+    private final Instant startSession;
+    private Instant endSession;
     private User user;
 
     /**
@@ -23,19 +24,19 @@ public class Session {
      * when creating the object and setting the end date and time null
      */
     public Session() {
-        this.startSession = LocalDateTime.now();
+        this.startSession = Instant.now();
         this.endSession = null;
     }
 
-    public LocalDateTime getStartSession() {
+    public Instant getStartSession() {
         return startSession;
     }
 
-    public LocalDateTime getEndSession() {
+    public Instant getEndSession() {
         return endSession;
     }
 
-    public void setEndSession(LocalDateTime endSession) {
+    public void setEndSession(Instant endSession) {
         this.endSession = endSession;
     }
 
