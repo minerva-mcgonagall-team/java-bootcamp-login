@@ -23,9 +23,10 @@ public class Session {
      * Session constructor that initialises a session start time with the current date and time
      * when creating the object and setting the end date and time null
      */
-    public Session() {
+    public Session(User user) {
         this.startSession = Instant.now();
         this.endSession = null;
+        this.user = user;
     }
 
     public Instant getStartSession() {

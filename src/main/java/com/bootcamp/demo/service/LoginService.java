@@ -7,6 +7,10 @@ import com.bootcamp.demo.repository.UserRepository;
 
 import java.time.Instant;
 
+/**
+ * LoginService implementation
+ * Next to add: forgotPassword()
+ */
 public class LoginService implements ILoginService {
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -16,12 +20,23 @@ public class LoginService implements ILoginService {
         this.sessionRepository = sessionRepository;
     }
 
+    /**
+     * @param new_user the new user
+     * @return true, if user was successfully saved, else false
+     */
     @Override
     public boolean registerUser(User new_user) {
         return userRepository.save(new_user);
 
     }
 
+    /**
+     * if user was successfully logged in, a new session is created
+     *
+     * @param email    is the email introduced by the user
+     * @param password is the password introduced by the user
+     * @return true if the user with the given email and password exists in the database, else false
+     */
     @Override
     public boolean loginUser(String email, String password) {
         User loggedUser = userRepository.findOne(email, password);
@@ -32,6 +47,13 @@ public class LoginService implements ILoginService {
         return false;
     }
 
+    /**
+     * Finds in the session repository list, the session that has the given user and the endSession null (unfinished)
+     * Sets the endSession to the local time
+     *
+     * @param user is the current logged in user that asks to log out
+     * @return true if he was successfully logged out
+     */
     @Override
     public boolean logoutUser(User user) {
 
