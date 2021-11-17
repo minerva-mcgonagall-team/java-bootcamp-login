@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +36,4 @@ public class UserController {
 
         return new ResponseEntity<>(sessionList, HttpStatus.OK);
     }
-
-
 }
