@@ -1,26 +1,19 @@
 package com.bootcamp.demo;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
+import com.bootcamp.demo.model.User;
+import com.bootcamp.demo.repository.FirebaseRepositoryFactory;
+import com.bootcamp.demo.repository.RepositoryFactory;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static java.lang.System.getProperty;
-import static java.nio.charset.StandardCharsets.UTF_8;
+import java.util.concurrent.ExecutionException;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
@@ -31,30 +24,29 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(path = "/firebase", produces = APPLICATION_JSON_VALUE)
 public class FirebaseController {
-
-    private Firestore firestoreDB;
-
-    @PostConstruct
-    private void initFirestore() throws IOException {
-        InputStream serviceAccount = new ByteArrayInputStream(getProperty("firebaseKey").getBytes(UTF_8));
-        GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
-
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(credentials)
-                .build();
-        FirebaseApp.initializeApp(options);
-
-        firestoreDB = FirestoreClient.getFirestore();
+     private final RepositoryFactory repositoryFactory;
+      @Autowired
+    public FirebaseController(RepositoryFactory repositoryFactory) {
+        this.repositoryFactory = repositoryFactory;
     }
 
-    /**
-     * Returns the paths for all collections stored in Firestore
-     */
     @GetMapping("/getAllPaths")
     public Set<String> getAllPaths() {
-        return StreamSupport.stream(firestoreDB.listCollections().spliterator(), false)
-                .map(CollectionReference::getPath)
-                .collect(Collectors.toUnmodifiableSet());
+            return repositoryFactory.createUserRepository().getAllPaths();
+    }
+
+
+    @GetMapping("/testThis")
+    public void dummyTest()  {
+        User.Gender myGender = User.Gender.MALE;
+        User user = new User("Dumitru","Furtuna","c.yahoo.com","oo","aa",myGender);
+        System.out.println(repositoryFactory.createUserRepository().save(user));
+        Set<User> users = repositoryFactory.createUserRepository().findAll();
+        System.out.println("I created " + users.size() + " users ");
+
+        for (User userInUsers : users) {
+            System.out.println(userInUsers.toString());
+        }
 
     }
 
