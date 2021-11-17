@@ -1,5 +1,7 @@
 package com.bootcamp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.Instant;
 
 
@@ -17,6 +19,7 @@ public class Session {
 
     private final Instant startSession;
     private Instant endSession;
+    @JsonIgnore
     private User user;
 
     /**
@@ -26,6 +29,12 @@ public class Session {
     public Session() {
         this.startSession = Instant.now();
         this.endSession = null;
+    }
+
+    public Session(User user) {
+        this.startSession = Instant.now();
+        this.endSession = null;
+        this.user = user;
     }
 
     public Instant getStartSession() {
