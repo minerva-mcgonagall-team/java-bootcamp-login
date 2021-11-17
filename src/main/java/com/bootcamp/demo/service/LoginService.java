@@ -4,6 +4,7 @@ import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
@@ -11,6 +12,7 @@ import java.time.Instant;
  * LoginService implementation
  * Next to add: forgotPassword()
  */
+@Service
 public class LoginService implements ILoginService {
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -39,8 +41,8 @@ public class LoginService implements ILoginService {
      */
     @Override
     public boolean loginUser(String email, String password) {
-        User loggedUser = userRepository.findOne(email, password);
-        if (loggedUser != null) {
+        User loggedUser = userRepository.findByEmail(email);
+        if (loggedUser != null && loggedUser.getPassword().equals(password)) {
             sessionRepository.save(new Session(loggedUser));
             return true;
         }
