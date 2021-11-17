@@ -14,13 +14,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/reg","/log-error")
+                .antMatchers("/registration","/log-error")
                 .permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
-            .loginPage("/log")
-            .failureUrl("/log-error")
+            .loginPage("/login")
+            .failureUrl("/login-error")
             .permitAll()
             .and()
             .logout()

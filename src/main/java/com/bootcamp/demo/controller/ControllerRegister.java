@@ -7,19 +7,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("registerWarning")
+@SessionAttributes("registrationWarning")
 public class ControllerRegister {
 
-    @RequestMapping(value = "/reg", method = RequestMethod.GET)
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String register() {
-        return "reg";
+        return "registration";
     }
+    //Pentru a cere date de verificare din DataBase
 
-    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String handleRegisterRequest(@RequestParam String username,
                                         @RequestParam String password,
                                         @RequestParam String email) {
 
-        return "redirect:/log";
+        return "redirect:/login";
     }
+    //Pentru a oferi date de înregistrare din DataBase
 }
