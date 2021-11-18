@@ -1,7 +1,7 @@
 package com.bootcamp.demo.model;
 
 import java.io.Serializable;
-import java.util.UUID;
+
 
 
 public class AbstractModel implements Serializable {
