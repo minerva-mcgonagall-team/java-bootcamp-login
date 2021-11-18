@@ -42,4 +42,7 @@ public class FirebaseRepositoryFactory implements RepositoryFactory {
     public SessionRepository createSessionsRepository() {
         return new FirebaseSessionRepository(firestoreDB);
     }
+
+    @Override
+    public UtilRepository createUtilRepository() { return new FirebaseUtilRepository(firestoreDB); }
 }

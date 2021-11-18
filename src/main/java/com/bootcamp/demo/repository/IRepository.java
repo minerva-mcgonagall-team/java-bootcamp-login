@@ -7,6 +7,6 @@ import java.util.concurrent.ExecutionException;
 public interface IRepository <T>{
     Set<T> findAll();
     String save(T t) ;
-    void remove(T t);
+    String remove(String t);
     T findById (String id) throws ExecutionException, InterruptedException;
 }

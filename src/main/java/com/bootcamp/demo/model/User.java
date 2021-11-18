@@ -1,7 +1,7 @@
 package com.bootcamp.demo.model;
 
 
-import java.io.Serializable;
+
 
 /**
  * An User object stores first and last name, email, password, phoneNumber and gender of an user
@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @version 15/11/2021
  */
 
-public class User implements Serializable {
+public class User  extends AbstractModel{
     public enum Gender {MALE, FEMALE}
 
     private String firstName;
@@ -90,6 +90,7 @@ public class User implements Serializable {
                 ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", gender=" + gender +
+                ", id=" + id +
                 '}';
     }
 }

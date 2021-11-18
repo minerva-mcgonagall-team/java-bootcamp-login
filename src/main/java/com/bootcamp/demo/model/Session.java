@@ -13,7 +13,7 @@ import java.time.Instant;
  * @version 11/11/2021
  */
 
-public class Session {
+public class Session extends AbstractModel{
 
     private final Instant startSession;
     private Instant endSession;

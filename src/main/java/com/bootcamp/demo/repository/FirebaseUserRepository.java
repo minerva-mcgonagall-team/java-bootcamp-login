@@ -1,6 +1,6 @@
 package com.bootcamp.demo.repository;
 
-import com.bootcamp.demo.UserBuilder;
+import com.bootcamp.demo.repository.builders.UserBuilder;
 import com.bootcamp.demo.model.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class FirebaseUserRepository implements UserRepository{
-    Firestore firestoreDB;
+    private static final String COLLECTION_PATH = "accounts";
+    private final Firestore firestoreDB;
 
     public FirebaseUserRepository(Firestore firestoreDB) {
         this.firestoreDB = firestoreDB;
@@ -20,7 +21,7 @@ public class FirebaseUserRepository implements UserRepository{
     @Override
     public Set<User> findAll() {
         try {
-        Iterable<QueryDocumentSnapshot> users = firestoreDB.collection("accounts")
+        Iterable<QueryDocumentSnapshot> users = firestoreDB.collection(COLLECTION_PATH)
                 .get()
                 .get()
                 .getDocuments();
@@ -36,10 +37,11 @@ public class FirebaseUserRepository implements UserRepository{
 
     @Override
     public String save(User user)  {
+        if (null == user) throw new IllegalArgumentException();
         try {
             ApiFuture<WriteResult> collectionFuture = firestoreDB
-                    .collection("accounts")
-                    .document("insert_id_here") //here an Id model would be nice
+                    .collection(COLLECTION_PATH)
+                    .document(user.getId())
                     .set(user);
             return collectionFuture.get().getUpdateTime().toString();
         } catch (ExecutionException | InterruptedException e) {
@@ -48,21 +50,28 @@ public class FirebaseUserRepository implements UserRepository{
     }
 
     @Override
-    public void remove(User user) {
-        ApiFuture<WriteResult> writeResult = firestoreDB.collection("accounts")
-                .document("insert_id_here") //here an Id model would be nice
+    public String remove(String id) {
+        if (null == id) throw new IllegalArgumentException();
+        try {
+        ApiFuture<WriteResult> collectionFuture = firestoreDB.collection(COLLECTION_PATH)
+                .document(id)
                 .delete();
+        return collectionFuture.get().getUpdateTime().toString();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException();
+        }
     }
 
     @Override
     public User findById(String id)  {
-        DocumentReference documentReference = firestoreDB.collection("accounts").document(id);
+        DocumentReference documentReference = firestoreDB.collection(COLLECTION_PATH).document(id);
         try {
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot documentSnapshot = future.get();
 
-        User user = null;
+        User user;
         if(documentSnapshot.exists()){
+
             user = documentSnapshot.toObject(User.class);
             return  user;
         }
@@ -72,13 +81,5 @@ public class FirebaseUserRepository implements UserRepository{
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException();
         }
-    }
-
-
-    //easter egg
-    public Set<String> getAllPaths() {
-        return StreamSupport.stream(firestoreDB.listCollections().spliterator(), false)
-                .map(CollectionReference::getPath)
-                .collect(Collectors.toUnmodifiableSet());
     }
 }

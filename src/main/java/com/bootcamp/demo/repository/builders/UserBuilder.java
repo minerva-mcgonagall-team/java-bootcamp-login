@@ -1,4 +1,4 @@
-package com.bootcamp.demo;
+package com.bootcamp.demo.repository.builders;
 
 import com.bootcamp.demo.model.User;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
