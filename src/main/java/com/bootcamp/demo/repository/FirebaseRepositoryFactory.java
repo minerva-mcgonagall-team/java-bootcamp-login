@@ -18,6 +18,7 @@ import java.io.InputStream;
 
 import static java.lang.System.getProperty;
 import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Component
 public class FirebaseRepositoryFactory implements RepositoryFactory {
     Firestore firestoreDB;
@@ -44,5 +45,7 @@ public class FirebaseRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public UtilRepository createUtilRepository() { return new FirebaseUtilRepository(firestoreDB); }
+    public UtilRepository createUtilRepository() {
+        return new FirebaseUtilRepository(firestoreDB);
+    }
 }
