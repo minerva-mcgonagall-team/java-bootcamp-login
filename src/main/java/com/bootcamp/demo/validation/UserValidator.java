@@ -4,7 +4,7 @@ import com.bootcamp.demo.model.User;
 
 public class UserValidator {
 
-    public void validateUserAtRegister (User user){
+    public void validateUserAtRegistration (User user){
         String errors = "";
 
         if (user.getFirstName() == null)
@@ -45,5 +45,22 @@ public class UserValidator {
         else if (!user.getPhoneNumber().matches("[+]40[0-9]{9}"))
             errors += "Phone number doesn't have the right format (+40...)\n";
 
+        if (!errors.equals(""))
+            throw new UserValidationError(errors);
     }
+
+
+    public void validateUserAtLogin(User user)
+    {
+        String errors = "";
+
+        if (user.getEmail() == null)
+            errors += "Email address cannot be empty!\n";
+        if (user.getPassword() == null)
+            errors += "Password cannot be empty!\n";
+
+        if (!errors.equals(""))
+            throw new UserValidationError(errors);
+    }
+
 }
