@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ControllerLogin {
 
     private final LoginService loginService;
-    //am nevoie de ea pentru maparea POST si GET
+    //am nevoie de ea pentru maparea GET
 
 
     @RequestMapping("/login")
@@ -34,6 +34,6 @@ public class ControllerLogin {
     @GetMapping
     public String loginService(@RequestBody String email, String password) {
         return loginService.loginUser(email, password);
-    }
+    }//preia informatiile pentru logare
 
 }
