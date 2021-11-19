@@ -22,6 +22,6 @@ public class ControllerLogin {
     public String loginError() {
         return "login-error";
     }
-    //Mapare pe eroare de login, adică nu a găsit niciun user:(
+    //Mapare pe eroare de login, adică nu a găsit niciun user:(d
 
 }
