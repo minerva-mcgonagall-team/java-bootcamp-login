@@ -24,10 +24,12 @@ public class LoginService implements ILoginService {
 
     /**
      * @param new_user the new user
-     * @return true, if user was successfully saved, else false
+     * @return true, if user was successfully saved, or false if email is already used
      */
     @Override
     public boolean registerUser(User new_user) {
+        if(userRepository.findByEmail(new_user.getEmail())!= null)
+            return false;
         return userRepository.save(new_user);
 
     }
