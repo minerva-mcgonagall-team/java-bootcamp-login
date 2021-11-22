@@ -23,14 +23,18 @@ public class LoginService implements ILoginService {
     }
 
     /**
-     * @param new_user the new user
+     * @param newUser the new user
      * @return true, if user was successfully saved, or false if email is already used
      */
     @Override
-    public boolean registerUser(User new_user) {
-        if(userRepository.findByEmail(new_user.getEmail())!= null)
-            return false;
-        return userRepository.save(new_user);
+    public boolean registerUser(User newUser) {
+        boolean succesStatus = false;
+        if (userRepository.findByEmail(newUser.getEmail()) == null) {
+            userRepository.save(newUser);
+            succesStatus = true;
+        }
+
+        return succesStatus;
 
     }
 
@@ -43,30 +47,32 @@ public class LoginService implements ILoginService {
      */
     @Override
     public boolean loginUser(String email, String password) {
+        boolean succesStatus = false;
         User loggedUser = userRepository.findByEmail(email);
         if (loggedUser != null && loggedUser.getPassword().equals(password)) {
             sessionRepository.save(new Session(loggedUser));
-            return true;
+            succesStatus = true;
         }
-        return false;
+        return succesStatus;
     }
 
     /**
-     * Finds in the session repository list, the session that has the given user and the endSession null (unfinished)
-     * Sets the endSession to the local time
+     * Sets the endSession to the local time for each Session from the list of active sessions of a user
+     * Updates the sessionRepository with each updated Session
      *
      * @param user is the current logged in user that asks to log out
-     * @return true if he was successfully logged out
+     * @return true if he was successfully logged out from all his devices (all his sessions were ended), else false
      */
     @Override
     public boolean logoutUser(User user) {
-
-        for (Session session : sessionRepository.getAll()) {
-            if (session.getUser().equals(user) && session.getEndSession() == null) {
-                session.setEndSession(Instant.now());
-                return true;
+        boolean succesStatus = true;
+        Instant endTime = Instant.now();
+        for (Session session : sessionRepository.getAllActiveSessions(user)) {
+            session.setEndSession(endTime);
+            if (!sessionRepository.updateSession(session)) {
+                succesStatus = false;
             }
         }
-        return false;
+        return succesStatus;
     }
 }
