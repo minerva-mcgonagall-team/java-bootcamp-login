@@ -1,16 +1,24 @@
 package com.bootcamp.demo.controller;
 
+import com.bootcamp.demo.dto.LoginRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ControllerLogin {
 
+    public final LoginService loginService;
 
+    @Autowired
+    public ControllerLogin (LoginService loginService){
+        this.loginService =loginService;
+    }
 
     @RequestMapping("/login")
-    public String login() {
-        return "login";
+    public boolean login(@RequestBody LoginRequest loginRequest) {
+        return loginService.loginUser(loginRequest.getEmail(),loginRequest.getPassword());
     }
     //Mapare pe login
 
@@ -25,5 +33,11 @@ public class ControllerLogin {
         return "login-error";
     }
     //Mapare pe eroare de login, adică nu a găsit niciun user:(
+
+
+
+
+
+
 
 }
