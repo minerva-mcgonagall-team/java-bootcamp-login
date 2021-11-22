@@ -1,5 +1,7 @@
 package com.bootcamp.demo.model;
 
+import java.util.Objects;
+
 /**
  * An User object stores first and last name, email, password, phoneNumber and gender of an user
  * <p>
@@ -26,6 +28,19 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, password, phoneNumber, gender);
     }
 
     public String getFirstName() {
