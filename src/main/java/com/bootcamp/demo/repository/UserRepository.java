@@ -4,6 +4,6 @@ import com.bootcamp.demo.model.User;
 
 
 public interface UserRepository extends IRepository<User> {
-
+    public User findByEmail(String email);
 
 }
