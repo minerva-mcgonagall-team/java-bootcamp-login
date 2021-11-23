@@ -1,7 +1,6 @@
 package com.bootcamp.demo.model;
 
-
-
+import java.util.Objects;
 
 /**
  * An User object stores first and last name, email, password, phoneNumber and gender of an user
@@ -12,7 +11,7 @@ package com.bootcamp.demo.model;
  * @version 15/11/2021
  */
 
-public class User  extends AbstractModel{
+public class User {
     public enum Gender {MALE, FEMALE}
 
     private String firstName;
@@ -21,9 +20,7 @@ public class User  extends AbstractModel{
     private String password;
     private String phoneNumber;
     private Gender gender;
-    public User(){
 
-    }
     public User(String firstName, String lastName, String email, String password, String phoneNumber, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,6 +28,19 @@ public class User  extends AbstractModel{
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, password, phoneNumber, gender);
     }
 
     public String getFirstName() {
@@ -81,16 +91,5 @@ public class User  extends AbstractModel{
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", gender=" + gender +
-                ", id=" + id +
-                '}';
-    }
+
 }
