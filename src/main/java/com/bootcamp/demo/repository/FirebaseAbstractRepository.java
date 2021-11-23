@@ -1,5 +1,6 @@
 package com.bootcamp.demo.repository;
 
+import com.bootcamp.demo.repository.exception.RepositoryException;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
@@ -38,7 +39,7 @@ public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
             }
             return result;
         } catch (ExecutionException | InterruptedException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException();
+            throw new RepositoryException("Exception findAll" + e);
         }
     }
 
@@ -51,7 +52,7 @@ public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
                     .set(t);
             return collectionFuture.get().getUpdateTime().toString();
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException();
+            throw new RepositoryException("Exception save" + e);
         }
     }
 
@@ -64,7 +65,7 @@ public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
                     .delete();
             return collectionFuture.get().getUpdateTime().toString();
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException();
+            throw new RepositoryException("Exception remove" + e);
         }
     }
 
@@ -83,7 +84,7 @@ public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
                 return null;
             }
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException();
+            throw new RepositoryException("Exception findbyId" + e);
         }
     }
 

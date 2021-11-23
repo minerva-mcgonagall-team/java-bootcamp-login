@@ -1,6 +1,7 @@
 package com.bootcamp.demo.repository;
 
 import com.bootcamp.demo.model.User;
+import com.bootcamp.demo.repository.exception.RepositoryException;
 import com.google.cloud.firestore.*;
 
 
@@ -31,7 +32,7 @@ public class FirebaseUserRepository extends FirebaseAbstractRepository<User> imp
             }
             return null;
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException();
+            throw new RepositoryException("Exception findByEmail " + e);
         }
     }
 

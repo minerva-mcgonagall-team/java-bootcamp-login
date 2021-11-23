@@ -3,6 +3,7 @@ package com.bootcamp.demo.repository;
 
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
+import com.bootcamp.demo.repository.exception.RepositoryException;
 import com.google.cloud.firestore.*;
 
 
@@ -52,7 +53,7 @@ public class FirebaseSessionRepository extends FirebaseAbstractRepository<Sessio
             }
             return result;
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException();
+            throw new RepositoryException("Exception getAllActiveSessions " + e);
         }
     }
 }
