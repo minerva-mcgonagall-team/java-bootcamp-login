@@ -4,63 +4,89 @@ import com.bootcamp.demo.model.User;
 
 public class UserValidator {
 
-    public void validateUserAtRegistration (User user){
+    public final static String NAME_PATTERN = "[A-Z]+[a-z]+[A-Z]*[a-z]*";
+    public final static String EMAIL_PATTERN = "[a-zA-Z0-9._-]+@[a-zA-Z]+[.][a-zA-Z]+";
+    public final static String CONTAINING_UPPERCASE_PATTERN = ".*[A-Z]+.*";
+    public final static String CONTAINING_LOWERCASE_PATTERN = ".*[a-z]+.*";
+    public final static String CONTAINING_DIGIT_PATTERN = ".*[0-9]+.*";
+    public final static String CONTAINING_SPECIAL_CHARACTER_PATTERN = ".*[!#$%^&*~_=+./<>-]+.*";
+    public final static String PHONE_NUMBER_PATTERN = "[+]40[0-9]{9}";
+
+    public String validateFirstName(String firstName) {
         String errors = "";
-
-        if (user.getFirstName() == null)
+        if (firstName == null)
             errors += "First name cannot be empty!\n";
-        else if (!user.getFirstName().matches("[A-Z]+[a-z]+[A-Z]*[a-z]*"))
+        else if (!firstName.matches(NAME_PATTERN))
             errors += "First name must start with an uppercase letter and have at least another letter!\n";
+        return errors;
+    }
 
-        if (user.getLastName() == null)
+    public String validateLastName(String lastName) {
+        String errors = "";
+        if (lastName == null)
             errors += "Last name cannot be empty!\n";
-        else if (!user.getLastName().matches("[A-Z]+[a-z]+[A-Z]*[a-z]*"))
+        else if (lastName.matches(NAME_PATTERN))
             errors += "Last name must start with an uppercase letter and have at least another letter!\n";
+        return errors;
+    }
 
-        if (user.getEmail() == null)
+    public String validateEmail(String email) {
+        String errors = "";
+        if (email == null)
             errors += "Email address cannot be empty!\n";
-        else if (!user.getEmail().matches("[a-zA-Z0-9._-]+@[a-zA-Z]+[.][a-zA-Z]+"))
+        else if (email.matches(EMAIL_PATTERN))
             errors += "The given email address doesn't seem right\n";
+        return errors;
+    }
 
-        if (user.getPassword() == null)
+    public String validatePassword(String password) {
+        String errors = "";
+        if (password == null)
             errors += "Password cannot be empty!\n";
-        else if (user.getPassword().length() < 8)
+        else if (password.length() < 8)
             errors += "Password isn't long enough!\n";
         else
         {
-            if (!user.getPassword().matches(".*[A-Z]+.*"))
+            if (!password.matches(CONTAINING_UPPERCASE_PATTERN))
                 errors += "Password must contain an uppercase letter!\n";
-            if (!user.getPassword().matches(".*[a-z]+.*"))
+            if (!password.matches(CONTAINING_LOWERCASE_PATTERN))
                 errors += "Password must contain a lowercase letter!\n";
-            if (!user.getPassword().matches(".*[0-9]+.*"))
+            if (!password.matches(CONTAINING_DIGIT_PATTERN))
                 errors += "Password must contain a digit!\n";
-            if (!user.getPassword().matches(".*[!#$%^&*~_=+./<>-]+.*"))
+            if (!password.matches(CONTAINING_SPECIAL_CHARACTER_PATTERN))
                 errors += "Password must contain a special character(!#$%^&*~_=+./<>-)\n";
         }
+        return errors;
+    }
 
-        if (user.getPhoneNumber() == null)
+    public String validatePhoneNumber(String phoneNumber) {
+        String errors = "";
+        if (phoneNumber == null)
             errors += "Phone number cannot be empty!\n";
-        else if (user.getPhoneNumber().length() != 12)
+        else if (phoneNumber.length() != 12)
             errors += "Phone number doesn't have the right length!\n";
-        else if (!user.getPhoneNumber().matches("[+]40[0-9]{9}"))
+        else if (!phoneNumber.matches(PHONE_NUMBER_PATTERN))
             errors += "Phone number doesn't have the right format (+40...)\n";
+        return errors;
+    }
 
+    public void validateUserAtRegistration (User user){
+        String errors = "";
+        errors += validateFirstName(user.getFirstName());
+        errors += validateLastName(user.getLastName());
+        errors += validateEmail(user.getEmail());
+        errors += validatePassword(user.getPassword());
+        errors += validatePhoneNumber(user.getPhoneNumber());
         if (!errors.equals(""))
             throw new UserValidationError(errors);
     }
-
 
     public void validateUserAtLogin(User user)
     {
         String errors = "";
-
-        if (user.getEmail() == null)
-            errors += "Email address cannot be empty!\n";
-        if (user.getPassword() == null)
-            errors += "Password cannot be empty!\n";
-
+        errors += validateEmail(user.getEmail());
+        errors += validatePassword(user.getPassword());
         if (!errors.equals(""))
             throw new UserValidationError(errors);
     }
-
 }
