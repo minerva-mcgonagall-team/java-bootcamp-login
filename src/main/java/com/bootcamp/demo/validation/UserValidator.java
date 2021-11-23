@@ -14,59 +14,74 @@ public class UserValidator {
 
     public String validateFirstName(String firstName) {
         String errors = "";
-        if (firstName == null)
+        if (firstName == null) {
             errors += "First name cannot be empty!\n";
-        else if (!firstName.matches(NAME_PATTERN))
+        }
+        else if (!firstName.matches(NAME_PATTERN)) {
             errors += "First name must start with an uppercase letter and have at least another letter!\n";
+        }
         return errors;
     }
 
     public String validateLastName(String lastName) {
         String errors = "";
-        if (lastName == null)
+        if (lastName == null) {
             errors += "Last name cannot be empty!\n";
-        else if (lastName.matches(NAME_PATTERN))
+        }
+        else if (lastName.matches(NAME_PATTERN)) {
             errors += "Last name must start with an uppercase letter and have at least another letter!\n";
+        }
         return errors;
     }
 
     public String validateEmail(String email) {
         String errors = "";
-        if (email == null)
+        if (email == null) {
             errors += "Email address cannot be empty!\n";
-        else if (email.matches(EMAIL_PATTERN))
+        }
+        else if (email.matches(EMAIL_PATTERN)) {
             errors += "The given email address doesn't seem right\n";
+        }
         return errors;
     }
 
     public String validatePassword(String password) {
         String errors = "";
-        if (password == null)
+        if (password == null) {
             errors += "Password cannot be empty!\n";
-        else if (password.length() < 8)
+        }
+        else if (password.length() < 8) {
             errors += "Password isn't long enough!\n";
+        }
         else
         {
-            if (!password.matches(CONTAINING_UPPERCASE_PATTERN))
+            if (!password.matches(CONTAINING_UPPERCASE_PATTERN)) {
                 errors += "Password must contain an uppercase letter!\n";
-            if (!password.matches(CONTAINING_LOWERCASE_PATTERN))
+            }
+            if (!password.matches(CONTAINING_LOWERCASE_PATTERN)) {
                 errors += "Password must contain a lowercase letter!\n";
-            if (!password.matches(CONTAINING_DIGIT_PATTERN))
+            }
+            if (!password.matches(CONTAINING_DIGIT_PATTERN)) {
                 errors += "Password must contain a digit!\n";
-            if (!password.matches(CONTAINING_SPECIAL_CHARACTER_PATTERN))
+            }
+            if (!password.matches(CONTAINING_SPECIAL_CHARACTER_PATTERN)) {
                 errors += "Password must contain a special character(!#$%^&*~_=+./<>-)\n";
+            }
         }
         return errors;
     }
 
     public String validatePhoneNumber(String phoneNumber) {
         String errors = "";
-        if (phoneNumber == null)
+        if (phoneNumber == null) {
             errors += "Phone number cannot be empty!\n";
-        else if (phoneNumber.length() != 12)
+        }
+        else if (phoneNumber.length() != 12) {
             errors += "Phone number doesn't have the right length!\n";
-        else if (!phoneNumber.matches(PHONE_NUMBER_PATTERN))
+        }
+        else if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
             errors += "Phone number doesn't have the right format (+40...)\n";
+        }
         return errors;
     }
 
@@ -77,8 +92,9 @@ public class UserValidator {
         errors += validateEmail(user.getEmail());
         errors += validatePassword(user.getPassword());
         errors += validatePhoneNumber(user.getPhoneNumber());
-        if (!errors.equals(""))
+        if (!errors.equals("")) {
             throw new UserValidationError(errors);
+        }
     }
 
     public void validateUserAtLogin(User user)
@@ -86,7 +102,8 @@ public class UserValidator {
         String errors = "";
         errors += validateEmail(user.getEmail());
         errors += validatePassword(user.getPassword());
-        if (!errors.equals(""))
+        if (!errors.equals("")) {
             throw new UserValidationError(errors);
+        }
     }
 }
