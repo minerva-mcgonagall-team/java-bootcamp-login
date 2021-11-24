@@ -32,12 +32,6 @@ public class Session extends AbstractModel{
         this.user = user;
     }
 
-    public Session(User user) {
-        this.startSession = Instant.now();
-        this.endSession = null;
-        this.user = user;
-    }
-
     public Instant getStartSession() {
         return startSession;
     }
