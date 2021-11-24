@@ -2,8 +2,10 @@ package com.bootcamp.demo.service;
 
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
+import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,13 +16,13 @@ import java.time.Instant;
  */
 @Service
 public class LoginService implements ILoginService {
-    private UserRepository userRepository;
-    private SessionRepository sessionRepository;
+    private final RepositoryFactory repositoryFactory;
 
-    public LoginService(UserRepository userRepository, SessionRepository sessionRepository) {
-        this.userRepository = userRepository;
-        this.sessionRepository = sessionRepository;
+    @Autowired
+    public LoginService(RepositoryFactory repositoryFactory) {
+        this.repositoryFactory = repositoryFactory;
     }
+
 
     /**
      * @param newUser the new user
@@ -28,13 +30,14 @@ public class LoginService implements ILoginService {
      */
     @Override
     public boolean registerUser(User newUser) {
-        boolean succesStatus = false;
+        boolean successStatus = false;
+        UserRepository userRepository = repositoryFactory.createUserRepository();
         if (userRepository.findByEmail(newUser.getEmail()) == null) {
-            userRepository.save(newUser);
-            succesStatus = true;
+            userRepository.save(newUser, newUser.getId());
+            successStatus = true;
         }
 
-        return succesStatus;
+        return successStatus;
 
     }
 
@@ -47,13 +50,16 @@ public class LoginService implements ILoginService {
      */
     @Override
     public boolean loginUser(String email, String password) {
-        boolean succesStatus = false;
+        boolean successStatus = false;
+        UserRepository userRepository = repositoryFactory.createUserRepository();
+        SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
         User loggedUser = userRepository.findByEmail(email);
         if (loggedUser != null && loggedUser.getPassword().equals(password)) {
-            sessionRepository.save(new Session(loggedUser));
-            succesStatus = true;
+            Session session = new Session(loggedUser);
+            sessionRepository.save(session, session.getId());
+            successStatus = true;
         }
-        return succesStatus;
+        return successStatus;
     }
 
     /**
@@ -65,14 +71,15 @@ public class LoginService implements ILoginService {
      */
     @Override
     public boolean logoutUser(User user) {
-        boolean succesStatus = true;
+        boolean successStatus = true;
         Instant endTime = Instant.now();
+        SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
         for (Session session : sessionRepository.getAllActiveSessions(user)) {
             session.setEndSession(endTime);
             if (!sessionRepository.updateSession(session)) {
-                succesStatus = false;
+                successStatus = false;
             }
         }
-        return succesStatus;
+        return successStatus;
     }
 }
