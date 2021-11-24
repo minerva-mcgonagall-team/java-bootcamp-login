@@ -5,6 +5,7 @@ import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -17,6 +18,7 @@ import java.time.Instant;
 public class LoginService implements ILoginService {
     private final RepositoryFactory repositoryFactory;
 
+    @Autowired
     public LoginService(RepositoryFactory repositoryFactory) {
         this.repositoryFactory = repositoryFactory;
     }
