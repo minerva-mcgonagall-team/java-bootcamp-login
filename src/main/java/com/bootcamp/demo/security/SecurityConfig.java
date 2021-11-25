@@ -15,7 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         /*
         http
             .authorizeRequests()
-                .antMatchers("/registration","/log-error")
+                .antMatchers("/registration","/login-error")
                 .permitAll()
             .anyRequest().authenticated()
             .and()
@@ -39,3 +39,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
