@@ -5,6 +5,8 @@ import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.repository.UserRepository;
+import com.bootcamp.demo.validation.UserValidationError;
+import com.bootcamp.demo.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import java.time.Instant;
 @Service
 public class LoginService implements ILoginService {
     private final RepositoryFactory repositoryFactory;
+    private final UserValidator userValidator;
 
     @Autowired
-    public LoginService(RepositoryFactory repositoryFactory) {
+    public LoginService(RepositoryFactory repositoryFactory, UserValidator userValidator) {
         this.repositoryFactory = repositoryFactory;
+        this.userValidator = userValidator;
     }
 
 
@@ -31,10 +35,16 @@ public class LoginService implements ILoginService {
     @Override
     public boolean registerUser(User newUser) {
         boolean successStatus = false;
-        UserRepository userRepository = repositoryFactory.createUserRepository();
-        if (userRepository.findByEmail(newUser.getEmail()) == null) {
-            userRepository.save(newUser, newUser.getId());
-            successStatus = true;
+        try{
+            userValidator.validateUserAtRegistration(newUser);
+            UserRepository userRepository = repositoryFactory.createUserRepository();
+            if (userRepository.findByEmail(newUser.getEmail()) == null) {
+                userRepository.save(newUser, newUser.getId());
+                successStatus = true;
+            }
+        } catch (UserValidationError validationError)
+        {
+            System.out.println(validationError.getMessage());
         }
 
         return successStatus;
@@ -51,14 +61,21 @@ public class LoginService implements ILoginService {
     @Override
     public boolean loginUser(String email, String password) {
         boolean successStatus = false;
-        UserRepository userRepository = repositoryFactory.createUserRepository();
-        SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
-        User loggedUser = userRepository.findByEmail(email);
-        if (loggedUser != null && loggedUser.getPassword().equals(password)) {
-            Session session = new Session(loggedUser);
-            sessionRepository.save(session, session.getId());
-            successStatus = true;
+        try{
+            userValidator.validateUserAtLogin(email, password);
+            UserRepository userRepository = repositoryFactory.createUserRepository();
+            SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
+            User loggedUser = userRepository.findByEmail(email);
+            if (loggedUser != null && loggedUser.getPassword().equals(password)) {
+                Session session = new Session(loggedUser);
+                sessionRepository.save(session, session.getId());
+                successStatus = true;
+            }
+        } catch (UserValidationError validationError)
+        {
+            System.out.println(validationError.getMessage());
         }
+
         return successStatus;
     }
 
