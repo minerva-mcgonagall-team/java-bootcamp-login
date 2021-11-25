@@ -1,19 +1,20 @@
 package com.bootcamp.demo.controller;
 
 import com.bootcamp.demo.dto.LoginRequest;
+import com.bootcamp.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class ControllerLogin {
+public class LoginController {
 
     public final LoginService loginService;
 
     @Autowired
-    public ControllerLogin (LoginService loginService){
-        this.loginService =loginService;
+    public LoginController(LoginService loginService){
+        this.loginService = loginService;
     }
 
     @RequestMapping("/login")
@@ -24,7 +25,7 @@ public class ControllerLogin {
 
     @RequestMapping("/")
     public String index() {
-        return "index";
+        return "login";
     }
     //Mapare pe index(pagina în care-l primim)
 
@@ -33,11 +34,5 @@ public class ControllerLogin {
         return "login-error";
     }
     //Mapare pe eroare de login, adică nu a găsit niciun user:(
-
-
-
-
-
-
-
 }
+

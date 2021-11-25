@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes("registrationWarning")
-public class ControllerRegister {
+public class RegisterController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String register() {
-        return "registration";
+        return "registrration";
     }
     //Pentru a cere date de verificare din DataBase
 
