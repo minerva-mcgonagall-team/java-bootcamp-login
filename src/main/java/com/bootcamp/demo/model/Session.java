@@ -13,7 +13,7 @@ import java.time.Instant;
  * @version 11/11/2021
  */
 
-public class Session {
+public class Session extends AbstractModel{
 
     private final Instant startSession;
     private Instant endSession;
@@ -23,9 +23,10 @@ public class Session {
      * Session constructor that initialises a session start time with the current date and time
      * when creating the object and setting the end date and time null
      */
-    public Session() {
+    public Session(User user) {
         this.startSession = Instant.now();
         this.endSession = null;
+        this.user = user;
     }
 
     public Instant getStartSession() {
