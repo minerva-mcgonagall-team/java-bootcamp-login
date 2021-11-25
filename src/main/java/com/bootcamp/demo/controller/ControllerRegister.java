@@ -17,9 +17,12 @@ public class ControllerRegister {
     //Pentru a cere date de verificare din DataBase
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String handleRegisterRequest(@RequestParam String username,
+    public String handleRegisterRequest(@RequestParam String firstName,
+                                        @RequestParam String LastName,
+                                        @RequestParam String gender,
                                         @RequestParam String password,
-                                        @RequestParam String email) {
+                                        @RequestParam String emaill,
+                                        @RequestParam String telephone) {
 
         return "redirect:/login";
     }
