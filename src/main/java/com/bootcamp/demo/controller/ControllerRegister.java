@@ -18,7 +18,7 @@ public class ControllerRegister {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String handleRegisterRequest(@RequestParam String firstName,
-                                        @RequestParam String LastName,
+                                        @RequestParam String lastName,
                                         @RequestParam String gender,
                                         @RequestParam String password,
                                         @RequestParam String emaill,
