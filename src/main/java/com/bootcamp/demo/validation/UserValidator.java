@@ -1,7 +1,9 @@
 package com.bootcamp.demo.validation;
 
 import com.bootcamp.demo.model.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserValidator {
 
     public final static String NAME_PATTERN = "[A-Z]+[a-z]+[A-Z]*[a-z]*";
@@ -97,11 +99,11 @@ public class UserValidator {
         }
     }
 
-    public void validateUserAtLogin(User user)
+    public void validateUserAtLogin(String email, String password)
     {
         String errors = "";
-        errors += validateEmail(user.getEmail());
-        errors += validatePassword(user.getPassword());
+        errors += validateEmail(email);
+        errors += validatePassword(password);
         if (!errors.equals("")) {
             throw new UserValidationError(errors);
         }
