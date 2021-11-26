@@ -20,6 +20,7 @@ public class LoginController {
     @RequestMapping("/login")
     public boolean login(@RequestBody LoginRequest loginRequest) {
         return loginService.loginUser(loginRequest.getEmail(),loginRequest.getPassword());
+
     }
     //Mapare pe login
 

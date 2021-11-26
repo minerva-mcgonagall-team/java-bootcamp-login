@@ -12,7 +12,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String register() {
-        return "registrration";
+        return "registration";
     }
     //Pentru a cere date de verificare din DataBase
 
