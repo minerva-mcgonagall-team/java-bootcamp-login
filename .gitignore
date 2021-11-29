@@ -30,3 +30,7 @@ hs_err_pid*
 /.settings
 /.project
 /.classpath
+
+#node modules
+**/node/**
+**/node_modules/**
