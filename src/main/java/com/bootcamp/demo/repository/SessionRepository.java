@@ -8,5 +8,6 @@ import java.util.Set;
 
 public interface SessionRepository extends IRepository<Session> {
     public Set<Session> getAllActiveSessions(User user);
+    public Set<Session> getAllSessions(User user);
     Boolean updateSession(Session session);
 }
