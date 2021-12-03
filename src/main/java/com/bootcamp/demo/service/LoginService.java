@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Set;
 
 /**
  * LoginService implementation
@@ -82,4 +83,11 @@ public class LoginService implements ILoginService {
         }
         return successStatus;
     }
+
+    @Override
+    public Set<Session> getAllSessions(User user) {
+        SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
+        return sessionRepository.getAllSessions(user);
+    }
 }
+

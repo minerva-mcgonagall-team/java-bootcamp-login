@@ -1,6 +1,9 @@
 package com.bootcamp.demo.service;
 
+import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
+
+import java.util.Set;
 
 /**
  * LoginService interface used for registration, login and logout
@@ -30,4 +33,6 @@ public interface ILoginService {
      * @return true if he was successfully logged out from all his devices (all his sessions were ended), else false
      */
     boolean logoutUser(User user);
+
+    public Set<Session> getAllSessions(User user);
 }

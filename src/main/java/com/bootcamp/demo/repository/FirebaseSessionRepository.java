@@ -56,5 +56,25 @@ public class FirebaseSessionRepository extends FirebaseAbstractRepository<Sessio
             throw new RepositoryException("Exception getAllActiveSessions " + e);
         }
     }
+
+    @Override
+    public Set<Session> getAllSessions(User user) {
+        try {
+            Iterable<QueryDocumentSnapshot> documents = getCollection()
+                    .get()
+                    .get()
+                    .getDocuments();
+            Set<Session> result = new HashSet<>();
+            for (QueryDocumentSnapshot doc : documents) {
+                Session session = doc.toObject(Session.class);
+                if ((session.getUser().equals(user))) {
+                    result.add(session);
+                }
+            }
+            return result;
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RepositoryException("Exception getAllSessions " + e);
+        }
+    }
 }
 
