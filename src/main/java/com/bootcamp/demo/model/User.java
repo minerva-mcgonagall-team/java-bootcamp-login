@@ -3,7 +3,7 @@ package com.bootcamp.demo.model;
 import java.util.Objects;
 
 /**
- * An User object stores first and last name, email, password, phoneNumber and gender of an user
+ * A User object stores first and last name, email, password, phoneNumber and gender of a user
  * <p>
  * Next needed update: to find a way to store encrypted password, not the real one
  *
@@ -14,6 +14,7 @@ import java.util.Objects;
 public class User extends AbstractModel {
     public enum Gender {MALE, FEMALE}
 
+    private int userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -25,7 +26,8 @@ public class User extends AbstractModel {
 
     }
 
-    public User(String firstName, String lastName, String email, String password, String phoneNumber, Gender gender) {
+    public User(int id, String firstName, String lastName, String email, String password, String phoneNumber, Gender gender) {
+        this.userId = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -35,7 +35,7 @@ public class FirebaseController {
     @GetMapping("/testRegister")
     public void testRegister() {
         User.Gender myGender = User.Gender.MALE;
-        User user = new User("RegisterTest", "Om", "test.hotmail.com", "oo", "aa", myGender);
+        User user = new User(1, "RegisterTest", "Om", "test.hotmail.com", "oo", "aa", myGender);
         String hardCodedId = "aaa-bbb-ccc";
         user.setId(hardCodedId);
 

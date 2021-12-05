@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -12,12 +13,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        http
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and().authorizeRequests().antMatchers("/").permitAll()
+                .and().csrf().disable();
+
         /*
         http
             .authorizeRequests()
             .antMatchers("/public/**").permitAll()
             .antMatchers("/actuator/health").permitAll()
-            .anyRequest().authenticated()
+            .antMatchers("/user/**").permitAll()
             .and()
             .formLogin()
             .loginPage("/login")
@@ -27,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .permitAll();
          */
-        http.csrf().disable();
     }
 
     @Override
