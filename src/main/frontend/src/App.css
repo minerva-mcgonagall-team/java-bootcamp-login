@@ -30,3 +30,21 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+body {
+
+  font-family: "Helvetica", Sans-Serif, serif;
+  background-size: cover;
+  background-origin: content-box;
+  background-blend-mode: lighten;
+  background: #35363A url("./background-image.jpg") no-repeat center;
+}
+
+p,
+label {
+  font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+  margin: .4rem;
+}

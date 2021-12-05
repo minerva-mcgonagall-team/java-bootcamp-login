@@ -48,8 +48,8 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
-            <img src="https://dynamic.brandcrowd.com/asset/logo/faf3daaf-ddc9-4cc2-80be-fb1a46d9b0bd/logo?v=637419791135730000" width="50" height="50" alt="brand"/>
-            {' '} Professional Electrical scooter rental Services
+            <img src="https://www.maxpixel.net/static/photo/1x/Play-Old-Man-Funny-Hurry-Up-Ride-Leg-Up-Scooter-2815675.png" width="50" height="50" alt="brand"/>
+            {' '} Rent Æ-Scooter
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -90,7 +90,7 @@ class App extends Component {
 
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  Sign Up
+                  Register
                 </Link>
               </li>
             </div>

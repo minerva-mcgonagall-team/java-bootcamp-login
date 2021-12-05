@@ -16,7 +16,7 @@ const required = value => {
   }
 };
 
-const email = value => {
+const validateEmail = value => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -26,17 +26,17 @@ const email = value => {
   }
 };
 
-const vusername = value => {
+const validateName = value => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
+        The name must be between 3 and 20 characters.
       </div>
     );
   }
 };
 
-const vpassword = value => {
+const validatePassword = value => {
   if (value.length < 6 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -50,12 +50,16 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeFirstName = this.onChangeFirstName.bind(this);
+    this.onChangeLastName = this.onChangeLastName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-
+/*
+there is also an alternative with useState hooks but I didn't dive in that deeper enough tho
+ */
     this.state = {
-      username: "",
+      firstname: "",
+      lastname:"",
       email: "",
       password: "",
       successful: false,
@@ -63,9 +67,14 @@ export default class Register extends Component {
     };
   }
 
-  onChangeUsername(e) {
+  onChangeFirstName(e) {
     this.setState({
-      username: e.target.value
+      firstname: e.target.value
+    });
+  }
+  onChangeLastName(e) {
+    this.setState({
+      lastname: e.target.value
     });
   }
 
@@ -93,7 +102,8 @@ export default class Register extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
-        this.state.username,
+        this.state.firstname,
+        this.state.lastname,
         this.state.email,
         this.state.password
       ).then(
@@ -139,29 +149,40 @@ export default class Register extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="firstname">First name</label>
                   <Input
                     type="text"
                     className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    validations={[required, vusername]}
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.onChangeFirstName}
+                    validations={[required, validateName]}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="lastname">Last name</label>
                   <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, email]}
+                      type="text"
+                      className="form-control"
+                      name="lastname"
+                      value={this.state.lastname}
+                      onChange={this.onChangeLastName}
+                      validations={[required, validateName]}
                   />
                 </div>
 
+                <div className="dropdown">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Gender
+                  </button>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a className="dropdown-item" href="#">Male</a>
+                    <a className="dropdown-item" href="#">Female</a>
+                    <a className="dropdown-item" href="#">Prefer not to say</a>
+                  </div>
+                </div>
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
                   <Input
@@ -170,7 +191,7 @@ export default class Register extends Component {
                     name="password"
                     value={this.state.password}
                     onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
+                    validations={[required, validatePassword]}
                   />
                 </div>
 

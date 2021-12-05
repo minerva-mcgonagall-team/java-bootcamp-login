@@ -1,5 +1,6 @@
 package com.bootcamp.demo.model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,12 +15,15 @@ import java.util.Objects;
 public class User extends AbstractModel {
     public enum Gender {MALE, FEMALE}
 
+    public enum Role {ROLE_USER,ADMIN_ROLE}
+
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String phoneNumber;
     private Gender gender;
+    private List<Role> roles;
 
     public User() {
 
@@ -95,5 +99,11 @@ public class User extends AbstractModel {
         this.password = password;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
 
+    public void setRole(List<Role> roles) {
+        this.roles = roles;
+    }
 }

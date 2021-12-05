@@ -106,7 +106,7 @@ export default class Login extends Component {
             }}
           >
             <div className="form-group">
-              <label htmlFor="email"><FontAwesomeIcon icon={faUser}/> email</label>
+              <label htmlFor="email"><FontAwesomeIcon icon={faUser}/> Email</label>
               <Input
                 type="text"
                 className="form-control"
