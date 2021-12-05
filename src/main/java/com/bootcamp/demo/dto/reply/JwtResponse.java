@@ -1,4 +1,4 @@
-package com.bootcamp.demo.dto;
+package com.bootcamp.demo.dto.reply;
 
 import java.util.List;
 

@@ -52,6 +52,7 @@ export default class Register extends Component {
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeLastName = this.onChangeLastName.bind(this);
+    this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
 /*
@@ -60,6 +61,7 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
     this.state = {
       firstname: "",
       lastname:"",
+      phoneNumber:"",
       email: "",
       password: "",
       successful: false,
@@ -77,7 +79,11 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
       lastname: e.target.value
     });
   }
-
+  onChangePhoneNumber(e) {
+    this.setState({
+      phoneNumber: e.target.value
+    });
+  }
   onChangeEmail(e) {
     this.setState({
       email: e.target.value
@@ -105,6 +111,7 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
         this.state.firstname,
         this.state.lastname,
         this.state.email,
+        this.state.phoneNumber,
         this.state.password
       ).then(
         response => {
@@ -171,18 +178,29 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
                       validations={[required, validateName]}
                   />
                 </div>
-
-                <div className="dropdown">
-                  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Gender
-                  </button>
-                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" href="#">Male</a>
-                    <a className="dropdown-item" href="#">Female</a>
-                    <a className="dropdown-item" href="#">Prefer not to say</a>
-                  </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <Input
+                      type="email"
+                      className="form-control"
+                      name="lastname"
+                      value={this.state.email}
+                      onChange={this.onChangeEmail}
+                      validations={[required, validateEmail]}
+                  />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="phoneNumber">Phone number</label>
+                  <Input
+                      type="tel"
+                      className="form-control"
+                      name="phoneNumber"
+                      value={this.state.phoneNumber}
+                      onChange={this.onChangePhoneNumber}
+                      validations={[required]}
+                  />
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
                   <Input
