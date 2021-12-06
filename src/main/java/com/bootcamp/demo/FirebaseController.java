@@ -33,14 +33,14 @@ public class FirebaseController {
     }
 
     @GetMapping("/testRegister")
-    public void testRegister() {
-        User.Gender myGender = User.Gender.MALE;
-        User user = new User("RegisterTest", "Om", "test.hotmail.com", "oo", "aa", myGender);
+    public boolean testRegister() {
+
+        User user = new User("RegisterTest", "Om", "florin@hotmail.com", "oo", "aa");
         String hardCodedId = "aaa-bbb-ccc";
         user.setId(hardCodedId);
+      //  return loginService.registerUser(user);
 
-        loginService.registerUser(user);
-
+       return  false;
     }
 
 }
