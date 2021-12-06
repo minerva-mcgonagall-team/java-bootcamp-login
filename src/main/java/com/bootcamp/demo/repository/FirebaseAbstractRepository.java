@@ -1,5 +1,6 @@
 package com.bootcamp.demo.repository;
 
+import com.bootcamp.demo.model.AbstractModel;
 import com.bootcamp.demo.repository.exception.RepositoryException;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -13,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 import com.google.cloud.firestore.CollectionReference;
 import org.apache.commons.beanutils.PropertyUtils;
 
-public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
+public abstract class FirebaseAbstractRepository<T extends AbstractModel> implements IRepository<T> {
     private final Class<T> className;
 
     @SuppressWarnings("unchecked")
@@ -34,22 +35,22 @@ public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
             Set<T> result = new HashSet<>();
             for (QueryDocumentSnapshot doc : documents) {
                 T object = doc.toObject(className);
-                PropertyUtils.setProperty(object, "id", doc.getId());
+                object.setId(doc.getId());
                 result.add(object);
             }
             return result;
-        } catch (ExecutionException | InterruptedException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (ExecutionException | InterruptedException e) {
             throw new RepositoryException("Exception findAll" + e);
         }
     }
 
 
-    public String save(T t, String id) {
-        if (null == t) throw new IllegalArgumentException();
+    public String save(T element) {
+        if (null == element) throw new IllegalArgumentException();
         try {
             ApiFuture<WriteResult> collectionFuture = getCollection()
-                    .document(id)
-                    .set(t);
+                    .document(element.getId())
+                    .set(element);
             return collectionFuture.get().getUpdateTime().toString();
         } catch (ExecutionException | InterruptedException e) {
             throw new RepositoryException("Exception save" + e);
@@ -76,10 +77,10 @@ public abstract class FirebaseAbstractRepository<T> implements IRepository<T> {
             ApiFuture<DocumentSnapshot> future = documentReference.get();
             DocumentSnapshot documentSnapshot = future.get();
 
-            T t;
+            T element;
             if (documentSnapshot.exists()) {
-                t = documentSnapshot.toObject(className);
-                return t;
+                element = documentSnapshot.toObject(className);
+                return element;
             } else {
                 return null;
             }

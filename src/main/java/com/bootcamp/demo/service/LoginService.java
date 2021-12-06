@@ -33,7 +33,7 @@ public class LoginService implements ILoginService {
         boolean successStatus = false;
         UserRepository userRepository = repositoryFactory.createUserRepository();
         if (userRepository.findByEmail(newUser.getEmail()) == null) {
-            userRepository.save(newUser, newUser.getId());
+            userRepository.save(newUser);
             successStatus = true;
         }
 
@@ -56,7 +56,7 @@ public class LoginService implements ILoginService {
         User loggedUser = userRepository.findByEmail(email);
         if (loggedUser != null && loggedUser.getPassword().equals(password)) {
             Session session = new Session(loggedUser);
-            sessionRepository.save(session, session.getId());
+            sessionRepository.save(session);
             successStatus = true;
         }
         return successStatus;

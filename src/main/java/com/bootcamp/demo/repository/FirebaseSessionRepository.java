@@ -33,7 +33,7 @@ public class FirebaseSessionRepository extends FirebaseAbstractRepository<Sessio
         if (null == session) {
             throw new IllegalArgumentException();
         }
-        save(session, session.getId());
+        save(session);
         return true;
     }
 

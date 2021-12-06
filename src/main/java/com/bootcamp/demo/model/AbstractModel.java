@@ -6,7 +6,7 @@ import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString
 import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 
-public class AbstractModel implements Serializable {
+public abstract class  AbstractModel implements Serializable {
     protected String id;
 
     public String getId() {
