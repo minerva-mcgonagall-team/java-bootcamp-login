@@ -1,7 +1,6 @@
 package com.bootcamp.demo.controller;
 
-import com.bootcamp.demo.dto.reply.MessageResponse;
-import com.bootcamp.demo.dto.request.SignupRequest;
+import com.bootcamp.demo.dto.request.RegisterRequest;
 import com.bootcamp.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,8 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
-        return loginService.registerUser(signupRequest);
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+        return loginService.registerUser(registerRequest);
     }
 
 

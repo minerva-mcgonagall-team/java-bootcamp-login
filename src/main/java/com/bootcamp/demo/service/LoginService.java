@@ -3,7 +3,7 @@ package com.bootcamp.demo.service;
 import com.bootcamp.demo.dto.reply.JwtResponse;
 import com.bootcamp.demo.dto.reply.MessageResponse;
 import com.bootcamp.demo.dto.request.LoginRequest;
-import com.bootcamp.demo.dto.request.SignupRequest;
+import com.bootcamp.demo.dto.request.RegisterRequest;
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.RepositoryFactory;
@@ -48,7 +48,7 @@ public class LoginService implements ILoginService {
 
 
     @Override
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest){
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signupRequest){
         User user = new User(signupRequest.getFirstname(), // here we could use a builder, or method mapper
                              signupRequest.getLastname(),
                              signupRequest.getEmail(),

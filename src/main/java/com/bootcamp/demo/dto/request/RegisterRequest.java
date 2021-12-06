@@ -3,7 +3,7 @@ package com.bootcamp.demo.dto.request;
 import com.bootcamp.demo.dto.AbstractDTO;
 
 
-public class SignupRequest extends AbstractDTO {
+public class RegisterRequest extends AbstractDTO {
 
     private String firstname;
     private String lastname;
@@ -19,7 +19,7 @@ public class SignupRequest extends AbstractDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public SignupRequest(String firstname, String lastname, String email, String password, String phoneNumber) {
+    public RegisterRequest(String firstname, String lastname, String email, String password, String phoneNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

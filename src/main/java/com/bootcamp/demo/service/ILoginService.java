@@ -1,7 +1,7 @@
 package com.bootcamp.demo.service;
 
 import com.bootcamp.demo.dto.request.LoginRequest;
-import com.bootcamp.demo.dto.request.SignupRequest;
+import com.bootcamp.demo.dto.request.RegisterRequest;
 import com.bootcamp.demo.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +15,7 @@ public interface ILoginService {
      * @param newUser the new user
      * @return true, if user was successfully saved, or false if email is already used
      */
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest);
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signupRequest);
 
     /**
      * if user was successfully logged in, a new session is created

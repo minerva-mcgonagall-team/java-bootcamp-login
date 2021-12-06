@@ -26,24 +26,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class LoginController {
 
-private final LoginService loginService;
+    private final LoginService loginService;
 
-@Autowired
-public LoginController(LoginService loginService){
-    this.loginService = loginService;
-}
+    @Autowired
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
 
     @RequestMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-            return loginService.login(loginRequest);
+        return loginService.login(loginRequest);
     }
-
-
-
-
-
-
 
 
 }
