@@ -16,8 +16,7 @@ public class UserValidator {
         String errors = "";
         if (firstName == null) {
             errors += "First name cannot be empty!\n";
-        }
-        else if (!firstName.matches(NAME_PATTERN)) {
+        } else if (!firstName.matches(NAME_PATTERN)) {
             errors += "First name must start with an uppercase letter and have at least another letter!\n";
         }
         return errors;
@@ -27,8 +26,7 @@ public class UserValidator {
         String errors = "";
         if (lastName == null) {
             errors += "Last name cannot be empty!\n";
-        }
-        else if (lastName.matches(NAME_PATTERN)) {
+        } else if (lastName.matches(NAME_PATTERN)) {
             errors += "Last name must start with an uppercase letter and have at least another letter!\n";
         }
         return errors;
@@ -38,8 +36,7 @@ public class UserValidator {
         String errors = "";
         if (email == null) {
             errors += "Email address cannot be empty!\n";
-        }
-        else if (email.matches(EMAIL_PATTERN)) {
+        } else if (email.matches(EMAIL_PATTERN)) {
             errors += "The given email address doesn't seem right\n";
         }
         return errors;
@@ -49,12 +46,9 @@ public class UserValidator {
         String errors = "";
         if (password == null) {
             errors += "Password cannot be empty!\n";
-        }
-        else if (password.length() < 8) {
+        } else if (password.length() < 8) {
             errors += "Password isn't long enough!\n";
-        }
-        else
-        {
+        } else {
             if (!password.matches(CONTAINING_UPPERCASE_PATTERN)) {
                 errors += "Password must contain an uppercase letter!\n";
             }
@@ -75,17 +69,15 @@ public class UserValidator {
         String errors = "";
         if (phoneNumber == null) {
             errors += "Phone number cannot be empty!\n";
-        }
-        else if (phoneNumber.length() != 12) {
+        } else if (phoneNumber.length() != 12) {
             errors += "Phone number doesn't have the right length!\n";
-        }
-        else if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+        } else if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
             errors += "Phone number doesn't have the right format (+40...)\n";
         }
         return errors;
     }
 
-    public void validateUserAtRegistration (User user){
+    public void validateUserAtRegistration(User user) {
         String errors = "";
         errors += validateFirstName(user.getFirstName());
         errors += validateLastName(user.getLastName());
@@ -97,8 +89,7 @@ public class UserValidator {
         }
     }
 
-    public void validateUserAtLogin(User user)
-    {
+    public void validateUserAtLogin(User user) {
         String errors = "";
         errors += validateEmail(user.getEmail());
         errors += validatePassword(user.getPassword());

@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 
 public class FirebaseUserRepository extends FirebaseAbstractRepository<User> implements UserRepository {
-    private static final String COLLECTION_PATH = "accounts";
+    private static final String COLLECTION_PATH = "minerva-users";
     private final Firestore firestoreDB;
 
     public FirebaseUserRepository(Firestore firestoreDB) {
