@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final RepositoryFactory repositoryFactory;
-     @Autowired
+
+    @Autowired
     public UserDetailsServiceImpl(RepositoryFactory repositoryFactory) {
         this.repositoryFactory = repositoryFactory;
     }
@@ -20,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
-         User user = repositoryFactory.createUserRepository().findByEmail(emailAddress);
+        User user = repositoryFactory.createUserRepository().findByEmail(emailAddress);
         return UserDetailsImpl.build(user);
     }
 }
