@@ -1,5 +1,6 @@
 package com.bootcamp.demo.service;
 
+import com.bootcamp.demo.dto.builder.UserBuilder;
 import com.bootcamp.demo.dto.reply.JwtResponse;
 import com.bootcamp.demo.dto.reply.MessageResponse;
 import com.bootcamp.demo.dto.request.LoginRequest;
@@ -48,14 +49,10 @@ public class LoginService implements ILoginService {
 
 
     @Override
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signupRequest){
-        User user = new User(signupRequest.getFirstname(), // here we could use a builder, or method mapper
-                             signupRequest.getLastname(),
-                             signupRequest.getEmail(),
-                encoder.encode(signupRequest.getPassword()),
-                            signupRequest.getPhoneNumber());
-        UUID uuid = UUID.randomUUID();
-        user.setId(uuid.toString());
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
+        User user = UserBuilder.toEntity(registerRequest);
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
         repositoryFactory.createUserRepository().save(user,user.getId());
         System.out.println(user.toString()); // this is for little logging

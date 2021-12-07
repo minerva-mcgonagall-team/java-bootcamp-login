@@ -11,20 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 public interface ILoginService {
 
-    /**
-     * @param newUser the new user
-     * @return true, if user was successfully saved, or false if email is already used
-     */
+
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signupRequest);
 
-    /**
-     * if user was successfully logged in, a new session is created
-     *
-     * @param email    is the email introduced by the user
-     * @param password is the password introduced by the user
-     * @return true if the user with the given email and password exists in the database, else false
-     */
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) ;
+
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest);
 
     /**
      * Sets the endSession to the local time for each Session from the list of active sessions of a user
