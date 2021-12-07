@@ -3,6 +3,7 @@ package com.bootcamp.demo.controller;
 
 import com.bootcamp.demo.dto.reply.JwtResponse;
 import com.bootcamp.demo.dto.request.LoginRequest;
+import com.bootcamp.demo.dto.request.UserSessionsRequest;
 import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.security.jwt.JwtUtils;
 import com.bootcamp.demo.service.LoginService;
@@ -39,5 +40,9 @@ public class LoginController {
         return loginService.login(loginRequest);
     }
 
+    @RequestMapping("/user-activity")
+    public ResponseEntity<?> getAllSessions(@RequestBody UserSessionsRequest userSessionsRequest){
+        return loginService.getAllSessions(userSessionsRequest);
+    }
 
 }

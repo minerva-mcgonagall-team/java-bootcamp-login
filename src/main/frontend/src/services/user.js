@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8080/test';
+const API_URL = 'http://localhost:8080/';
 
 class User {
   getPublicContent() {
@@ -9,7 +9,13 @@ class User {
   }
 
   getUserBoard() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
+    return axios.get(API_URL + 'user-activity', {
+      firstname,
+      lastname,
+      email,
+      phoneNumber,
+      password,
+     headers: authHeader() });
   }
 
 }

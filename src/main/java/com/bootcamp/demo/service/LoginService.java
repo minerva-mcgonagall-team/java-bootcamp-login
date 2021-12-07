@@ -4,6 +4,7 @@ import com.bootcamp.demo.dto.reply.JwtResponse;
 import com.bootcamp.demo.dto.reply.MessageResponse;
 import com.bootcamp.demo.dto.request.LoginRequest;
 import com.bootcamp.demo.dto.request.RegisterRequest;
+import com.bootcamp.demo.dto.request.UserSessionsRequest;
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.RepositoryFactory;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -92,6 +94,23 @@ public class LoginService implements ILoginService {
 
          */
     }
+
+
+    @Override
+    public ResponseEntity<?> getAllSessions(@RequestBody UserSessionsRequest userSessionsRequest) {
+        SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
+        User user = new User(userSessionsRequest.getFirstname(),
+                userSessionsRequest.getLastname(),
+                userSessionsRequest.getEmail(),
+                userSessionsRequest.getPassword(),
+                userSessionsRequest.getPhoneNumber());
+
+        //return sessionRepository.getAllSessions(user);
+
+        //nu stiu cum sa trimit lista de sesiuni, sigur nu e corect asa
+        return ResponseEntity.ok(sessionRepository.getAllSessions(user));
+    }
+
 
     /**
      * Sets the endSession to the local time for each Session from the list of active sessions of a user
