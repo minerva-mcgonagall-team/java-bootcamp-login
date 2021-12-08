@@ -1,26 +1,21 @@
 package com.bootcamp.demo.service;
 
+import com.bootcamp.demo.dto.request.LoginRequest;
+import com.bootcamp.demo.dto.request.RegisterRequest;
 import com.bootcamp.demo.model.User;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * LoginService interface used for registration, login and logout
  */
 public interface ILoginService {
 
-    /**
-     * @param newUser the new user
-     * @return true, if user was successfully saved, or false if email is already used
-     */
-    boolean registerUser(User newUser);
 
-    /**
-     * if user was successfully logged in, a new session is created
-     *
-     * @param email    is the email introduced by the user
-     * @param password is the password introduced by the user
-     * @return true if the user with the given email and password exists in the database, else false
-     */
-    boolean loginUser(String email, String password);
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signupRequest);
+
+
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest);
 
     /**
      * Sets the endSession to the local time for each Session from the list of active sessions of a user

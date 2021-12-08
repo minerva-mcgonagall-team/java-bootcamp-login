@@ -1,11 +1,13 @@
 package com.bootcamp.demo.repository;
 
 import com.google.cloud.firestore.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Repository
 public class FirebaseUtilRepository implements UtilRepository {
     private final Firestore firestoreDB;
 

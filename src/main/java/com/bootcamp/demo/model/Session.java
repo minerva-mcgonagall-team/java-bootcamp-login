@@ -1,5 +1,7 @@
 package com.bootcamp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.Instant;
 
 
@@ -17,6 +19,7 @@ public class Session extends AbstractModel{
 
     private final Instant startSession;
     private Instant endSession;
+    @JsonIgnore
     private User user;
 
     /**
