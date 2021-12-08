@@ -58,7 +58,7 @@ public class LoginService implements ILoginService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
-        userRepository.save(user,user.getId());
+        userRepository.save(user);
         System.out.println(user.toString()); // this is for little logging
         return ResponseEntity.ok(new MessageResponse("Registration was successful"));
     }
