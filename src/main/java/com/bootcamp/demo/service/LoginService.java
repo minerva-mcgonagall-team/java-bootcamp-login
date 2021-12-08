@@ -1,16 +1,39 @@
 package com.bootcamp.demo.service;
 
+import com.bootcamp.demo.dto.builder.UserBuilder;
+import com.bootcamp.demo.dto.reply.JwtResponse;
+import com.bootcamp.demo.dto.reply.MessageResponse;
+import com.bootcamp.demo.dto.request.LoginRequest;
+import com.bootcamp.demo.dto.request.RegisterRequest;
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.repository.SessionRepository;
-import com.bootcamp.demo.repository.UserRepository;
-import com.bootcamp.demo.validation.UserValidationError;
+//<<<<<<< HEAD
+//import com.bootcamp.demo.repository.UserRepository;
+//import com.bootcamp.demo.validation.UserValidationError;
+//import com.bootcamp.demo.validation.UserValidator;
+//=======
+import com.bootcamp.demo.security.jwt.JwtUtils;
+import com.bootcamp.demo.service.userDetails.UserDetailsImpl;
+//>>>>>>> 263430265f8264f7a4bfc85f6ad472a9b813f72d
 import com.bootcamp.demo.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * LoginService implementation
@@ -18,20 +41,35 @@ import java.time.Instant;
  */
 @Service
 public class LoginService implements ILoginService {
+    private final PasswordEncoder encoder;
     private final RepositoryFactory repositoryFactory;
-    private final UserValidator userValidator;
+    private final  AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
+//<<<<<<< HEAD
+    //private final UserValidator userValidator;
+
 
     @Autowired
+    public LoginService(PasswordEncoder encoder, RepositoryFactory repositoryFactory, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+        this.encoder = encoder;
+        this.repositoryFactory = repositoryFactory;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
+    }
+    /*@Autowired
     public LoginService(RepositoryFactory repositoryFactory, UserValidator userValidator) {
         this.repositoryFactory = repositoryFactory;
         this.userValidator = userValidator;
-    }
+    }*/
+
+/*
 
 
-    /**
-     * @param newUser the new user
-     * @return true, if user was successfully saved, or false if email is already used
-     */
+
+      //@param newUser the new user
+      //@return true, if user was successfully saved, or false if email is already used
+     //*
+
     @Override
     public boolean registerUser(User newUser) {
         boolean successStatus = false;
@@ -48,18 +86,41 @@ public class LoginService implements ILoginService {
         }
 
         return successStatus;
+=======
 
+
+
+>>>>>>> 263430265f8264f7a4bfc85f6ad472a9b813f72d
+*/
+
+    @Override
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
+        User user = UserBuilder.toEntity(registerRequest);
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setId(UUID.randomUUID().toString());
+        user.setRole(Collections.singletonList(User.Role.ROLE_USER));
+        repositoryFactory.createUserRepository().save(user,user.getId());
+        System.out.println(user.toString()); // this is for little logging
+        return ResponseEntity.ok(new MessageResponse("Registration was successful"));
     }
 
-    /**
-     * if user was successfully logged in, a new session is created
-     *
-     * @param email    is the email introduced by the user
-     * @param password is the password introduced by the user
-     * @return true if the user with the given email and password exists in the database, else false
-     */
+
     @Override
-    public boolean loginUser(String email, String password) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
+        /*
         boolean successStatus = false;
         try{
             userValidator.validateUserAtLogin(email, password);
@@ -77,6 +138,8 @@ public class LoginService implements ILoginService {
         }
 
         return successStatus;
+
+         */
     }
 
     /**
