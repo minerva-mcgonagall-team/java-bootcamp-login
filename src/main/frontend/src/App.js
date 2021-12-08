@@ -11,6 +11,7 @@ import Home from "./components/home";
 import Profile from "./components/profile";
 import BoardUser from "./components/board-user";
 import {Col, Container,Navbar} from "react-bootstrap";
+import UserDetails from "./components/userDetails";
 
 
 
@@ -65,13 +66,21 @@ class App extends Component {
                 </Link>
               </li>
             )}
+
+            {currentUser && (
+                <li className="nav-item">
+                  <Link to={"/profile"} className="nav-link">
+                    Profile
+                  </Link>
+                </li>
+            )}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  {currentUser.firstname}
+                  {currentUser.username}
                 </Link>
               </li>
               <li className="nav-item">
@@ -111,7 +120,7 @@ class App extends Component {
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/:id" component={UserDetails} />
             <Route path="/user" component={BoardUser} />
           </Switch>
         </div>
