@@ -1,21 +1,9 @@
-package com.bootcamp.demo.model;
-
-import java.io.Serializable;
-
+package com.bootcamp.demo.dto;
 import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
 import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 
-public abstract class AbstractModel implements Serializable {
-    protected String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+public abstract class AbstractDTO {
 
     @Override
     public String toString() {

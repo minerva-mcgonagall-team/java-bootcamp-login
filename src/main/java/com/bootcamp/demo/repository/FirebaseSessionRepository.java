@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 public class FirebaseSessionRepository extends FirebaseAbstractRepository<Session> implements SessionRepository {
     Firestore firestoreDB;
 
-    private static final String COLLECTION_PATH = "sessions";
+    private static final String COLLECTION_PATH = "minerva-sessions";
 
     public FirebaseSessionRepository(Firestore firestoreDB) {
         this.firestoreDB = firestoreDB;

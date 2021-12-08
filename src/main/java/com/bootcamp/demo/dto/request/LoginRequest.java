@@ -1,9 +1,19 @@
-package com.bootcamp.demo.dto;
+package com.bootcamp.demo.dto.request;
 
-public class LoginRequest {
+import com.bootcamp.demo.dto.AbstractDTO;
+
+public class LoginRequest extends AbstractDTO {
 
     private String email;
     private String password;
+
+    public LoginRequest() {
+
+    }
+
+    public LoginRequest(String email) {
+        this.email = email;
+    }
 
     public String getEmail() {
         return email;
@@ -20,14 +30,5 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @Override
-    public String toString() {
-        return "LoginRequest{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
 
 }
