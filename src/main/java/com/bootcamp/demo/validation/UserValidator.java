@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserValidator {
-    public final static String NAME_PATTERN = "[A-Z]+[a-z]+[A-Z]*[a-z]*";
-    public final static String EMAIL_PATTERN = "[a-zA-Z0-9._-]+@[a-zA-Z]+[.][a-zA-Z]+";
+    public final static String NAME_PATTERN = "[A-Z-/-]+[a-z/-]+[A-Z/-]*[a-z/-]";
+    public final static String EMAIL_PATTERN = "(?:[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     public final static String CONTAINING_UPPERCASE_PATTERN = ".*[A-Z]+.*";
     public final static String CONTAINING_LOWERCASE_PATTERN = ".*[a-z]+.*";
     public final static String CONTAINING_DIGIT_PATTERN = ".*[0-9]+.*";
     public final static String CONTAINING_SPECIAL_CHARACTER_PATTERN = ".*[!#$%^&*~_=+./<>-]+.*";
-    public final static String PHONE_NUMBER_PATTERN = "[+]40[0-9]{9}";
+    public final static String PHONE_NUMBER_PATTERN = "([+]4)*0[0-9]{9}";
 
     public String validateFirstName(String firstName) {
         String errors = "";

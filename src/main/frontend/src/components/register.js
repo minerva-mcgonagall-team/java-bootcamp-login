@@ -99,11 +99,6 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
   handleRegister(e) {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      successful: false
-    });
-
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
