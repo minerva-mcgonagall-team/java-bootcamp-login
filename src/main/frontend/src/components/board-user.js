@@ -4,7 +4,6 @@ import UserService from "../services/user";
 import AuthService from "../services/auth";
 
 
-
 export default class BoardUser extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +15,7 @@ export default class BoardUser extends Component {
       redirect: null,
       userReady: false,
       currentUser: {
-        firstname: "",
-        lastname:"",
-        phoneNumber:"",
-        email: "",
-        password: "" },
+        id:""},
       content: ""
     };
   }
@@ -32,11 +27,7 @@ export default class BoardUser extends Component {
     this.setState({ currentUser: currentUser, userReady: true })
 
     UserService.getUserBoard(
-        this.state.currentUser.firstname,
-        this.state.currentUser.lastname,
-        this.state.currentUser.email,
-        this.state.currentUser.password,
-        this.state.currentUser.phoneNumber
+        this.state.currentUser.id
     ).then(
         response => {
           this.setState({

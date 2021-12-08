@@ -97,13 +97,10 @@ public class LoginService implements ILoginService {
 
 
     @Override
-    public ResponseEntity<?> getAllSessions(@RequestBody UserSessionsRequest userSessionsRequest) {
+    public ResponseEntity<?> getAllSessions(String id) {
         SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
-        User user = new User(userSessionsRequest.getFirstname(),
-                userSessionsRequest.getLastname(),
-                userSessionsRequest.getEmail(),
-                userSessionsRequest.getPassword(),
-                userSessionsRequest.getPhoneNumber());
+        User user = new User();
+        user.setId(id);
 
         //return sessionRepository.getAllSessions(user);
 

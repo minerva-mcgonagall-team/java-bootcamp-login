@@ -5,17 +5,11 @@ const API_URL = 'http://localhost:8080/';
 
 class User {
   getPublicContent() {
-    return axios.get(API_URL );
+    return axios.get(API_URL);
   }
 
-  getUserBoard() {
-    return axios.get(API_URL + 'user-activity', {
-      firstname,
-      lastname,
-      email,
-      phoneNumber,
-      password,
-     headers: authHeader() });
+  getUserBoard(id) {
+    return axios.get(API_URL + 'user-activity/'+id);
   }
 
 }

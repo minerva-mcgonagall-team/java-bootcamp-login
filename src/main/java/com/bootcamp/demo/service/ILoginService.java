@@ -21,6 +21,6 @@ public interface ILoginService {
 
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) ;
 
-    public ResponseEntity<?> getAllSessions(@RequestBody UserSessionsRequest userSessionsRequest);
+    public ResponseEntity<?> getAllSessions(String id);
     boolean logoutUser(User user);
 }

@@ -67,7 +67,7 @@ public class FirebaseSessionRepository extends FirebaseAbstractRepository<Sessio
             Set<Session> result = new HashSet<>();
             for (QueryDocumentSnapshot doc : documents) {
                 Session session = doc.toObject(Session.class);
-                if ((session.getUser().equals(user))) {
+                if ((session.getUser().getId().equals(user.getId()))) {
                     result.add(session);
                 }
             }

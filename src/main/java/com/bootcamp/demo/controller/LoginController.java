@@ -41,8 +41,9 @@ public class LoginController {
     }
 
     @RequestMapping("/user-activity")
-    public ResponseEntity<?> getAllSessions(@RequestBody UserSessionsRequest userSessionsRequest){
-        return loginService.getAllSessions(userSessionsRequest);
+    public ResponseEntity<?> getAllSessions(String id){
+        return loginService.getAllSessions(id);
     }
+
 
 }
