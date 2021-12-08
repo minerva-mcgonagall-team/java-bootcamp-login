@@ -3,11 +3,12 @@ package com.bootcamp.demo.repository;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.exception.RepositoryException;
 import com.google.cloud.firestore.*;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.concurrent.ExecutionException;
 
-
+@Repository
 public class FirebaseUserRepository extends FirebaseAbstractRepository<User> implements UserRepository {
     private static final String COLLECTION_PATH = "minerva-users";
     private final Firestore firestoreDB;
