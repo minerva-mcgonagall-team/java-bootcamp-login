@@ -153,7 +153,7 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
               this.form = c;
             }}
           >
-            {!this.state.successful && (
+            {!this.state.successful ? (
               <div>
                 <div className="form-group">
                   <label htmlFor="firstname">First name</label>
@@ -217,6 +217,14 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
                   <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
               </div>
+            ) : (
+                <div>
+                    <h3 style={{textAlign: 'center'}}> Register was successful! </h3>
+                    <br></br>
+                    <div className="form-group">
+                        <button className="btn btn-primary btn-block" onClick={() => window.location='/login'}>Go to Login</button>
+                    </div>
+                </div>
             )}
 
             {this.state.message && (

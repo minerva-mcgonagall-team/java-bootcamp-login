@@ -1,9 +1,10 @@
 package com.bootcamp.demo.validation;
 
 import com.bootcamp.demo.model.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserValidator {
-
     public final static String NAME_PATTERN = "[A-Z]+[a-z]+[A-Z]*[a-z]*";
     public final static String EMAIL_PATTERN = "[a-zA-Z0-9._-]+@[a-zA-Z]+[.][a-zA-Z]+";
     public final static String CONTAINING_UPPERCASE_PATTERN = ".*[A-Z]+.*";
@@ -85,7 +86,7 @@ public class UserValidator {
         return errors;
     }
 
-    public void validateUserAtRegistration (User user){
+    public void validateUserAtRegistration(User user) throws UserValidationError {
         String errors = "";
         errors += validateFirstName(user.getFirstName());
         errors += validateLastName(user.getLastName());
@@ -97,7 +98,7 @@ public class UserValidator {
         }
     }
 
-    public void validateUserAtLogin(User user)
+    public void validateUserAtLogin(User user) throws UserValidationError
     {
         String errors = "";
         errors += validateEmail(user.getEmail());
