@@ -9,6 +9,8 @@ import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.repository.UserRepository;
+import com.bootcamp.demo.security.jwt.JwtUtils;
+import com.bootcamp.demo.service.userDetails.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,18 +35,22 @@ import java.util.stream.Collectors;
 @Service
 public class LoginService implements ILoginService {
     private final PasswordEncoder encoder;
-    private final RepositoryFactory repositoryFactory;
+    private final UserRepository userRepository;
+    private final SessionRepository sessionRepository;
     private final  AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     @Autowired
-    public LoginService(PasswordEncoder encoder, RepositoryFactory repositoryFactory, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public LoginService(PasswordEncoder encoder,
+                        UserRepository userRepository,
+                        SessionRepository sessionRepository,
+                        AuthenticationManager authenticationManager,
+                        JwtUtils jwtUtils) {
         this.encoder = encoder;
-        this.repositoryFactory = repositoryFactory;
+        this.userRepository = userRepository;
+        this.sessionRepository = sessionRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
     }
-
-
 
     @Override
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
@@ -52,7 +58,7 @@ public class LoginService implements ILoginService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
-        repositoryFactory.createUserRepository().save(user,user.getId());
+        userRepository.save(user,user.getId());
         System.out.println(user.toString()); // this is for little logging
         return ResponseEntity.ok(new MessageResponse("Registration was successful"));
     }
