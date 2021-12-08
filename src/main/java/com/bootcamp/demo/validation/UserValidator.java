@@ -3,22 +3,24 @@ package com.bootcamp.demo.validation;
 import com.bootcamp.demo.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Component
 public class UserValidator {
-    public final static String NAME_PATTERN = "[A-Z-/-]+[a-z/-]+[A-Z/-]*[a-z/-]";
+    public final static String NAME_PATTERN = "^[A-Z][-a-zA-Z]+$";
     public final static String EMAIL_PATTERN = "(?:[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     public final static String CONTAINING_UPPERCASE_PATTERN = ".*[A-Z]+.*";
     public final static String CONTAINING_LOWERCASE_PATTERN = ".*[a-z]+.*";
     public final static String CONTAINING_DIGIT_PATTERN = ".*[0-9]+.*";
     public final static String CONTAINING_SPECIAL_CHARACTER_PATTERN = ".*[!#$%^&*~_=+./<>-]+.*";
-    public final static String PHONE_NUMBER_PATTERN = "([+]4)*0[0-9]{9}";
 
     public String validateFirstName(String firstName) {
         String errors = "";
         if (firstName == null) {
             errors += "First name cannot be empty!\n";
         }
-        else if (!firstName.matches(NAME_PATTERN)) {
+        else if (!Pattern.compile(NAME_PATTERN).matcher(firstName).matches()) {
             errors += "First name must start with an uppercase letter and have at least another letter!\n";
         }
         return errors;
@@ -29,7 +31,7 @@ public class UserValidator {
         if (lastName == null) {
             errors += "Last name cannot be empty!\n";
         }
-        else if (lastName.matches(NAME_PATTERN)) {
+        else if (!Pattern.compile(NAME_PATTERN).matcher(lastName).matches()) {
             errors += "Last name must start with an uppercase letter and have at least another letter!\n";
         }
         return errors;
@@ -40,7 +42,7 @@ public class UserValidator {
         if (email == null) {
             errors += "Email address cannot be empty!\n";
         }
-        else if (email.matches(EMAIL_PATTERN)) {
+        else if (Pattern.compile(EMAIL_PATTERN).matcher(email).matches()) {
             errors += "The given email address doesn't seem right\n";
         }
         return errors;
@@ -56,16 +58,16 @@ public class UserValidator {
         }
         else
         {
-            if (!password.matches(CONTAINING_UPPERCASE_PATTERN)) {
+            if (!Pattern.compile(CONTAINING_UPPERCASE_PATTERN).matcher(password).find()) {
                 errors += "Password must contain an uppercase letter!\n";
             }
-            if (!password.matches(CONTAINING_LOWERCASE_PATTERN)) {
+            if (!Pattern.compile(CONTAINING_LOWERCASE_PATTERN).matcher(password).find()) {
                 errors += "Password must contain a lowercase letter!\n";
             }
-            if (!password.matches(CONTAINING_DIGIT_PATTERN)) {
+            if (!Pattern.compile(CONTAINING_DIGIT_PATTERN).matcher(password).find()) {
                 errors += "Password must contain a digit!\n";
             }
-            if (!password.matches(CONTAINING_SPECIAL_CHARACTER_PATTERN)) {
+            if (!Pattern.compile(CONTAINING_SPECIAL_CHARACTER_PATTERN).matcher(password).find()) {
                 errors += "Password must contain a special character(!#$%^&*~_=+./<>-)\n";
             }
         }
@@ -80,7 +82,7 @@ public class UserValidator {
         else if (phoneNumber.length() != 12) {
             errors += "Phone number doesn't have the right length!\n";
         }
-        else if (!phoneNumber.matches(PHONE_NUMBER_PATTERN)) {
+        else if (!Pattern.compile(PHONE_NUMBER_PATTERN).matcher(phoneNumber).matches()) {
             errors += "Phone number doesn't have the right format (+40...)\n";
         }
         return errors;
