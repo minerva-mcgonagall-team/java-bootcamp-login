@@ -14,6 +14,7 @@ public class UserValidator {
     public final static String CONTAINING_LOWERCASE_PATTERN = ".*[a-z]+.*";
     public final static String CONTAINING_DIGIT_PATTERN = ".*[0-9]+.*";
     public final static String CONTAINING_SPECIAL_CHARACTER_PATTERN = ".*[!#$%^&*~_=+./<>-]+.*";
+    public final static String PHONE_NUMBER_PATTERN = "^\\s?((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?\\s?";
 
     public String validateFirstName(String firstName) {
         String errors = "";
