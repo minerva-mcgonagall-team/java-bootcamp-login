@@ -54,7 +54,7 @@ public class UserValidator {
         if (password == null) {
             errors += "Password cannot be empty!\n";
         }
-        else if (password.length() < 8) {
+        else if (password.length() < 6) {
             errors += "Password isn't long enough!\n";
         }
         else
