@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -8,161 +8,163 @@ import AuthService from "../services/auth";
 import {Button} from "react-bootstrap";
 
 const required = value => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
+    if (!value) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This field is required!
+            </div>
+        );
+    }
 };
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+    constructor(props) {
+        super(props);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
 
-    this.state = {
-      email: "",
-      password: "",
-      loading: false,
-      message: ""
-    };
-  }
-
-  initialState = {
-    email: "",
-    password: "",
-    loading: false,
-    message: ""
-  };
-
-  resetLoginForm = () => {
-    this.setState(() => this.initialState);
-  };
-
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
-
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  handleLogin(e) {
-    e.preventDefault();
-
-    this.setState({
-      message: "",
-      loading: true
-    });
-
-    this.form.validateAll();
-
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.email, this.state.password).then(
-        () => {
-          this.props.history.push("/");
-          window.location.reload();
-        },
-        error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          this.setState({
+        this.state = {
+            email: "",
+            password: "",
             loading: false,
-            message: resMessage
-          });
-        }
-      );
-    } else {
-      this.setState({
-        loading: false
-      });
+            message: ""
+        };
     }
-  }
 
-  render() {
-    return (
-      <div className="col-md-12">
-        <div className="card card-container">
+    initialState = {
+        email: "",
+        password: "",
+        loading: false,
+        message: ""
+    };
 
-          <img src="https://i.fbcd.co/products/resized/resized-750-500/1622-0217e58ea40d860a0e01b5a492884a87e7530ed8f72d1f9b0405159a56090150.jpg" alt="..." className="img-thumbnail">
-          </img>
-          <Form
-            onSubmit={this.handleLogin}
-            ref={c => {
-              this.form = c;
-            }}
-          >
-            <div className="form-group">
-              <label htmlFor="email"><FontAwesomeIcon icon={faUser}/> Email</label>
-              <Input
-                type="text"
-                className="form-control"
-                name="email"
-                placeholder="Enter email"
-                value={this.state.email}
-                onChange={this.onChangeEmail}
-                validations={[required]}
-              />
-            </div>
+    resetLoginForm = () => {
+        this.setState(() => this.initialState);
+    };
 
-            <div className="form-group">
-              <label htmlFor="password"><FontAwesomeIcon icon={faLock}/> Password</label>
-              <Input
-                type="password"
-                className="form-control"
-                name="password"
-                placeholder="Enter password"
-                value={this.state.password}
-                onChange={this.onChangePassword}
-                validations={[required]}
-              />
-            </div>
+    onChangeEmail(e) {
+        this.setState({
+            email: e.target.value
+        });
+    }
 
-            <div className="form-group">
-              <button
-                className="btn btn-primary btn-block"
-                disabled={this.state.loading}
-              >
-                {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span> <FontAwesomeIcon icon={faSignInAlt} /> Login</span>
-              </button>
-            </div>
+    onChangePassword(e) {
+        this.setState({
+            password: e.target.value
+        });
+    }
 
-            {this.state.message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {this.state.message}
+    handleLogin(e) {
+        e.preventDefault();
+
+        this.setState({
+            message: "",
+            loading: true
+        });
+
+        this.form.validateAll();
+
+        if (this.checkBtn.context._errors.length === 0) {
+            AuthService.login(this.state.email, this.state.password).then(
+                () => {
+                    this.props.history.push("/");
+                    window.location.reload();
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                    this.setState({
+                        loading: false,
+                        message: resMessage
+                    });
+                }
+            );
+        } else {
+            this.setState({
+                loading: false
+            });
+        }
+    }
+
+    render() {
+        return (
+            <div className="col-md-12">
+                <div className="card card-container">
+
+                    <img
+                        src="https://i.fbcd.co/products/resized/resized-750-500/1622-0217e58ea40d860a0e01b5a492884a87e7530ed8f72d1f9b0405159a56090150.jpg"
+                        alt="..." className="img-thumbnail">
+                    </img>
+                    <Form
+                        onSubmit={this.handleLogin}
+                        ref={c => {
+                            this.form = c;
+                        }}
+                    >
+                        <div className="form-group">
+                            <label htmlFor="email"><FontAwesomeIcon icon={faUser}/> Email</label>
+                            <Input
+                                type="text"
+                                className="form-control"
+                                name="email"
+                                placeholder="Enter email"
+                                value={this.state.email}
+                                onChange={this.onChangeEmail}
+                                validations={[required]}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="password"><FontAwesomeIcon icon={faLock}/> Password</label>
+                            <Input
+                                type="password"
+                                className="form-control"
+                                name="password"
+                                placeholder="Enter password"
+                                value={this.state.password}
+                                onChange={this.onChangePassword}
+                                validations={[required]}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <button
+                                className="btn btn-primary btn-block"
+                                disabled={this.state.loading}
+                            >
+                                {this.state.loading && (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                )}
+                                <span> <FontAwesomeIcon icon={faSignInAlt}/> Login</span>
+                            </button>
+                        </div>
+
+                        {this.state.message && (
+                            <div className="form-group">
+                                <div className="alert alert-danger" role="alert">
+                                    {this.state.message}
+                                </div>
+                            </div>
+                        )}
+                        <CheckButton
+                            style={{display: "none"}}
+                            ref={c => {
+                                this.checkBtn = c;
+                            }}
+                        />
+                        <Button size="sm" type="button" variant="info" onClick={this.resetLoginForm}>
+                            <FontAwesomeIcon icon={faUndo}/> Reset
+                        </Button>
+
+                    </Form>
                 </div>
-              </div>
-            )}
-            <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
-                this.checkBtn = c;
-              }}
-            />
-            <Button size="sm" type="button" variant="info" onClick={this.resetLoginForm}>
-              <FontAwesomeIcon icon={faUndo}/> Reset
-            </Button>
-
-          </Form>
-        </div>
-      </div>
-    );
-  }
+            </div>
+        );
+    }
 }
