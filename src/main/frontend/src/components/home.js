@@ -37,10 +37,11 @@ export default class Home extends Component {
                 <h1>{this.state.content}</h1>
                 <blockquote className="blockquote mb-0">
                     <p>
-                        This app saved me a lot of time
+                        Great experience.
+                        I was very lucky to be a part of this app creation process, together with some amazing people. We all learnt together in the past weeks.
                     </p>
                     <footer className="blockquote-footer">
-                        Florin, a happy customer
+                        Alexandra, the real mvp
                     </footer>
                 </blockquote>
             </Jumbotron>
