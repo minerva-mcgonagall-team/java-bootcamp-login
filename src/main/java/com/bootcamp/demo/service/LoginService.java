@@ -11,7 +11,10 @@ import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.security.jwt.JwtUtils;
 import com.bootcamp.demo.service.userDetails.UserDetailsImpl;
+import com.bootcamp.demo.validation.UserValidationError;
+import com.bootcamp.demo.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,12 +41,14 @@ public class LoginService implements ILoginService {
     private final RepositoryFactory repositoryFactory;
     private final  AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final UserValidator userValidator;
     @Autowired
-    public LoginService(PasswordEncoder encoder, RepositoryFactory repositoryFactory, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public LoginService(PasswordEncoder encoder, RepositoryFactory repositoryFactory, AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserValidator userValidator) {
         this.encoder = encoder;
         this.repositoryFactory = repositoryFactory;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.userValidator = userValidator;
     }
 
 
@@ -51,11 +56,22 @@ public class LoginService implements ILoginService {
     @Override
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
         User user = UserBuilder.toEntity(registerRequest);
+
+        try {
+            userValidator.validateUserAtRegistration(user);
+        } catch (UserValidationError e) {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+
+        if (repositoryFactory.createUserRepository().findByEmail(user.getEmail()) != null) {
+            return new ResponseEntity<>(new MessageResponse("Email already in use."), HttpStatus.BAD_REQUEST);
+        }
+
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
         repositoryFactory.createUserRepository().save(user,user.getId());
-        System.out.println(user.toString()); // this is for little logging
+
         return ResponseEntity.ok(new MessageResponse("Registration was successful"));
     }
 
