@@ -5,6 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
 import AuthService from "../services/auth";
+import {Button} from "react-bootstrap";
 
 const required = value => {
   if (!value) {
@@ -237,12 +238,17 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
-                this.checkBtn = c;
-              }}
+                style={{ display: "none" }}
+                ref={c => {
+                  this.checkBtn = c;
+                }}
             />
+            {this.state.successful === true &&
+                <div>
+            <Button size="sm" variant="success" type="submit"  onClick={ this.props.history.push("/login")}> Proceed </Button>
+                </div>}
           </Form>
+
         </div>
       </div>
     );
