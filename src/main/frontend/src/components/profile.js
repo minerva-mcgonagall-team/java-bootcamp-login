@@ -30,29 +30,25 @@ export default class Profile extends Component {
         return (
             <div className="container">
                 {(this.state.userReady) ?
-                    <div>
+                    <div >
                         <header className="jumbotron">
                             <h3>
                                 <strong>{currentUser.username}</strong> Profile
                             </h3>
+                            <p>
+                                <strong>First name:</strong>{" "}
+                                {currentUser.firstname}<br />
+                                <strong>Email:</strong>{" "}
+                                {currentUser.email}<br />
+                                <strong>Last name:</strong>{" "}
+                                {currentUser.lastname}<br />
+                                <strong>Phone Number:</strong>{" "}
+                                {currentUser.phoneNumber}
+                            </p>
                         </header>
-                        <p>
-                            <strong>Token:</strong>{" "}
-                            {currentUser.accessToken}
-                        </p>
-                        <p>
-                            <strong>Id:</strong>{" "}
-                            {currentUser.id}
-                        </p>
-                        <p>
-                            <strong>Email:</strong>{" "}
-                            {currentUser.email}
-                        </p>
-                        <strong>Authorities:</strong>
-                        <ul>
-                            {currentUser.roles &&
-                            currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-                        </ul>
+
+
+
                     </div> : null}
             </div>
         );
