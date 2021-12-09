@@ -43,7 +43,7 @@ public class UserValidator {
         if (email == null) {
             errors += "Email address cannot be empty!\n";
         }
-        else if (Pattern.compile(EMAIL_PATTERN).matcher(email).matches()) {
+        else if (!Pattern.compile(EMAIL_PATTERN).matcher(email).matches()) {
             errors += "The given email address doesn't seem right\n";
         }
         return errors;
@@ -79,9 +79,6 @@ public class UserValidator {
         String errors = "";
         if (phoneNumber == null) {
             errors += "Phone number cannot be empty!\n";
-        }
-        else if (phoneNumber.length() != 12) {
-            errors += "Phone number doesn't have the right length!\n";
         }
         else if (!Pattern.compile(PHONE_NUMBER_PATTERN).matcher(phoneNumber).matches()) {
             errors += "Phone number doesn't have the right format (+40...)\n";
