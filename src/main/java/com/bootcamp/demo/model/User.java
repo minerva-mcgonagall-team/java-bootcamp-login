@@ -17,6 +17,7 @@ public class User extends AbstractModel {
 
     public enum Role {ROLE_USER,ADMIN_ROLE}
 
+    private int userId;
     private String firstName;
     private String lastName;
     private String email;

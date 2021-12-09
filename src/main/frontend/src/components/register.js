@@ -100,11 +100,6 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
   handleRegister(e) {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      successful: false
-    });
-
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
@@ -218,6 +213,7 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
                   <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
               </div>
+
             ): (
                 <div>
                   <h3 style={{textAlign: 'center'}}> Register was successful! </h3>
@@ -227,6 +223,7 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
                       window.location='/index.html';
                     }}>Proceed to application</button>
                   </div>
+
                 </div>
             )}
             {this.state.message && (

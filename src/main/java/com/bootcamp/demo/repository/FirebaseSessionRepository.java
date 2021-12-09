@@ -1,18 +1,20 @@
 package com.bootcamp.demo.repository;
 
-
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
 import com.bootcamp.demo.repository.exception.RepositoryException;
 import com.google.cloud.firestore.*;
+import org.springframework.stereotype.Repository;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import java.util.concurrent.ExecutionException;
 
-
+@Repository
 public class FirebaseSessionRepository extends FirebaseAbstractRepository<Session> implements SessionRepository {
     Firestore firestoreDB;
 
@@ -33,21 +35,21 @@ public class FirebaseSessionRepository extends FirebaseAbstractRepository<Sessio
         if (null == session) {
             throw new IllegalArgumentException();
         }
-        save(session, session.getId());
+        save(session);
         return true;
     }
 
     @Override
-    public Set<Session> getAllActiveSessions(User user) {
+    public List<Session> findSessionsForUserId(String userId) {
         try {
             Iterable<QueryDocumentSnapshot> documents = getCollection()
                     .get()
                     .get()
                     .getDocuments();
-            Set<Session> result = new HashSet<>();
+            List<Session> result = new ArrayList<>();
             for (QueryDocumentSnapshot doc : documents) {
                 Session session = doc.toObject(Session.class);
-                if ((session.getUser().equals(user)) && (session.getEndSession() == null)) {
+                if ((session.getUser().getId().equals(userId)) && (session.getEndSession() == null)) {
                     result.add(session);
                 }
             }

@@ -7,8 +7,8 @@ import com.bootcamp.demo.dto.request.LoginRequest;
 import com.bootcamp.demo.dto.request.RegisterRequest;
 import com.bootcamp.demo.model.Session;
 import com.bootcamp.demo.model.User;
-import com.bootcamp.demo.repository.RepositoryFactory;
 import com.bootcamp.demo.repository.SessionRepository;
+import com.bootcamp.demo.repository.UserRepository;
 import com.bootcamp.demo.security.jwt.JwtUtils;
 import com.bootcamp.demo.service.userDetails.UserDetailsImpl;
 import com.bootcamp.demo.validation.UserValidationError;
@@ -38,20 +38,22 @@ import java.util.stream.Collectors;
 @Service
 public class LoginService implements ILoginService {
     private final PasswordEncoder encoder;
-    private final RepositoryFactory repositoryFactory;
-    private final  AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final SessionRepository sessionRepository;
+    private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UserValidator userValidator;
+
     @Autowired
     public LoginService(PasswordEncoder encoder, RepositoryFactory repositoryFactory, AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserValidator userValidator) {
+
         this.encoder = encoder;
-        this.repositoryFactory = repositoryFactory;
+        this.userRepository = userRepository;
+        this.sessionRepository = sessionRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userValidator = userValidator;
     }
-
-
 
     @Override
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
@@ -63,7 +65,9 @@ public class LoginService implements ILoginService {
             return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
 
+
         if (repositoryFactory.createUserRepository().findByEmail(user.getEmail()) != null) {
+
             return new ResponseEntity<>(new MessageResponse("Email already in use."), HttpStatus.BAD_REQUEST);
         }
 
@@ -71,7 +75,6 @@ public class LoginService implements ILoginService {
         user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
         repositoryFactory.createUserRepository().save(user,user.getId());
-
         return ResponseEntity.ok(new MessageResponse("Registration was successful"));
     }
 
@@ -120,13 +123,16 @@ public class LoginService implements ILoginService {
     public boolean logoutUser(User user) {
         boolean successStatus = true;
         Instant endTime = Instant.now();
-        SessionRepository sessionRepository = repositoryFactory.createSessionsRepository();
-        for (Session session : sessionRepository.getAllActiveSessions(user)) {
+        for (Session session : sessionRepository.findSessionsForUserId(user.getId())) {
             session.setEndSession(endTime);
             if (!sessionRepository.updateSession(session)) {
                 successStatus = false;
             }
         }
         return successStatus;
+    }
+
+    public List<Session> findSessionsFor(String userId) {
+        return sessionRepository.findSessionsForUserId(userId);
     }
 }

@@ -1,6 +1,6 @@
 package com.bootcamp.demo.validation;
 
-public class UserValidationError extends RuntimeException {
+public class UserValidationError extends Exception {
     public UserValidationError(String errors) {
         super(errors);
     }
