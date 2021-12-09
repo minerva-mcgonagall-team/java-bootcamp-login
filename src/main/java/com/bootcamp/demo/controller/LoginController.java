@@ -26,6 +26,4 @@ public class LoginController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         return loginService.login(loginRequest);
     }
-
-
 }

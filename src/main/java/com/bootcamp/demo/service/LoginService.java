@@ -11,7 +11,10 @@ import com.bootcamp.demo.repository.SessionRepository;
 import com.bootcamp.demo.repository.UserRepository;
 import com.bootcamp.demo.security.jwt.JwtUtils;
 import com.bootcamp.demo.service.userDetails.UserDetailsImpl;
+import com.bootcamp.demo.validation.UserValidationError;
+import com.bootcamp.demo.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,24 +40,39 @@ public class LoginService implements ILoginService {
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
-    private final  AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final UserValidator userValidator;
+
     @Autowired
     public LoginService(PasswordEncoder encoder,
                         UserRepository userRepository,
                         SessionRepository sessionRepository,
                         AuthenticationManager authenticationManager,
-                        JwtUtils jwtUtils) {
+                        JwtUtils jwtUtils,
+                        UserValidator userValidator) {
         this.encoder = encoder;
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
+        this.userValidator = userValidator;
     }
 
     @Override
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
         User user = UserBuilder.toEntity(registerRequest);
+
+        try {
+            userValidator.validateUserAtRegistration(user);
+        } catch (UserValidationError e) {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            return new ResponseEntity<>(new MessageResponse("Email already in use."), HttpStatus.BAD_REQUEST);
+        }
+
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
