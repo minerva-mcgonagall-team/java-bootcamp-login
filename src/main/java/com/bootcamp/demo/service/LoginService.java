@@ -45,12 +45,8 @@ public class LoginService implements ILoginService {
     private final UserValidator userValidator;
 
     @Autowired
-    public LoginService(PasswordEncoder encoder,
-                        UserRepository userRepository,
-                        SessionRepository sessionRepository,
-                        AuthenticationManager authenticationManager,
-                        JwtUtils jwtUtils,
-                        UserValidator userValidator) {
+    public LoginService(PasswordEncoder encoder, RepositoryFactory repositoryFactory, AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserValidator userValidator) {
+
         this.encoder = encoder;
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
@@ -69,15 +65,16 @@ public class LoginService implements ILoginService {
             return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+
+        if (repositoryFactory.createUserRepository().findByEmail(user.getEmail()) != null) {
+
             return new ResponseEntity<>(new MessageResponse("Email already in use."), HttpStatus.BAD_REQUEST);
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(UUID.randomUUID().toString());
         user.setRole(Collections.singletonList(User.Role.ROLE_USER));
-        userRepository.save(user);
-        System.out.println(user.toString()); // this is for little logging
+        repositoryFactory.createUserRepository().save(user,user.getId());
         return ResponseEntity.ok(new MessageResponse("Registration was successful"));
     }
 

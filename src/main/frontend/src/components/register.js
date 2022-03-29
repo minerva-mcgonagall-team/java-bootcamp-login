@@ -213,29 +213,32 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
                   <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
               </div>
-            ) : (
+
+            ): (
                 <div>
-                    <h3 style={{textAlign: 'center'}}> Register was successful! </h3>
-                    <br></br>
-                    <div className="form-group">
-                        <button className="btn btn-primary btn-block" onClick={() => window.location='/login'}>Go to Login</button>
-                    </div>
+                  <h3 style={{textAlign: 'center'}}> Register was successful! </h3>
+                  <br></br>
+                  <div className="form-group">
+                    <button className="btn btn-primary btn-block" onClick={() => {
+                      window.location='/index.html';
+                    }}>Proceed to application</button>
+                  </div>
+
                 </div>
             )}
-
             {this.state.message && (
-              <div className="form-group">
-                <div
-                  className={
-                    this.state.successful
-                      ? "alert alert-success"
-                      : "alert alert-danger"
-                  }
-                  role="alert"
-                >
-                  {this.state.message}
+                <div className="form-group">
+                  <div
+                      className={
+                        this.state.successful
+                            ? "alert alert-success"
+                            : "alert alert-danger"
+                      }
+                      role="alert"
+                  >
+                    {this.state.message}
+                  </div>
                 </div>
-              </div>
             )}
             <CheckButton
                 style={{ display: "none" }}
@@ -243,10 +246,6 @@ there is also an alternative with useState hooks but I didn't dive in that deepe
                   this.checkBtn = c;
                 }}
             />
-            {this.state.successful === true &&
-                <div>
-            <Button size="sm" variant="success" type="submit"  onClick={ this.props.history.push("/login")}> Proceed </Button>
-                </div>}
           </Form>
 
         </div>
